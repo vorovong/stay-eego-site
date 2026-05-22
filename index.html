@@ -288,7 +288,17 @@ body::before {
 .hero .intro em {
   font-style: italic;
   font-family: "Gowun Batang", serif;
+  font-weight: 700;
   color: var(--accent);
+  letter-spacing: 0.01em;
+  margin-inline-end: 0.08em;
+  word-break: keep-all;
+}
+
+html[lang="ko"] .hero .intro em,
+html[lang="zh-CN"] .hero .intro em,
+html[lang="ja"] .hero .intro em {
+  margin-inline-end: 0.16em;
 }
 
 .signature {

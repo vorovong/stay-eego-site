@@ -79,7 +79,7 @@ body::before {
   top: max(14px, env(safe-area-inset-top));
   right: max(16px, env(safe-area-inset-right));
   z-index: 30;
-  font-family: "Cormorant Garamond", "Pretendard Variable", serif;
+  font-family: "Pretendard Variable", Pretendard, -apple-system, sans-serif;
 }
 
 .language-button {
@@ -88,14 +88,14 @@ body::before {
   gap: 8px;
   min-height: 44px;
   padding: 10px 16px;
-  border: 1px solid rgba(26, 24, 19, 0.24);
+  border: 1px solid rgba(26, 24, 19, 0.42);
   border-radius: 999px;
-  background: rgba(251, 246, 233, 0.9);
-  color: var(--ink);
+  background: rgba(251, 246, 233, 0.96);
+  color: #11100D;
   cursor: pointer;
   font: inherit;
   font-size: 15px;
-  font-weight: 700;
+  font-weight: 850;
   letter-spacing: 0.12em;
   text-transform: uppercase;
   box-shadow: 0 10px 24px -18px rgba(26, 24, 19, 0.45);
@@ -136,10 +136,11 @@ body::before {
   border: 0;
   border-radius: 8px;
   background: transparent;
-  color: var(--ink-soft);
+  color: #242019;
   cursor: pointer;
   font: inherit;
   font-size: 15px;
+  font-weight: 700;
   letter-spacing: 0.02em;
   text-align: left;
   -webkit-tap-highlight-color: transparent;
@@ -153,9 +154,44 @@ body::before {
 
 .language-option .code {
   font-size: 12px;
+  font-weight: 850;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  opacity: 0.72;
+  opacity: 0.82;
+}
+
+.back-to-top {
+  position: fixed;
+  right: max(18px, env(safe-area-inset-right));
+  bottom: max(18px, env(safe-area-inset-bottom));
+  z-index: 24;
+  width: 50px;
+  height: 50px;
+  border: 1px solid rgba(26, 24, 19, 0.28);
+  border-radius: 999px;
+  background: var(--ink);
+  color: var(--paper);
+  cursor: pointer;
+  font-family: "Pretendard Variable", Pretendard, -apple-system, sans-serif;
+  font-size: 24px;
+  font-weight: 850;
+  line-height: 1;
+  box-shadow: 0 16px 34px -20px rgba(26, 24, 19, 0.55);
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.2s ease, transform 0.2s ease, background 0.2s ease;
+  pointer-events: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.back-to-top.visible {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.back-to-top:hover {
+  background: var(--accent);
 }
 
 .container {
@@ -436,6 +472,13 @@ body::before {
     min-height: 42px;
     padding: 10px 11px;
     font-size: 14px;
+  }
+  .back-to-top {
+    right: max(14px, env(safe-area-inset-right));
+    bottom: max(14px, env(safe-area-inset-bottom));
+    width: 48px;
+    height: 48px;
+    font-size: 23px;
   }
 }
 
@@ -1292,6 +1335,8 @@ body.filter-alcohol .place.duplicate { display: flex; }
 
 <div class="dancheong" style="margin-top: 40px;"></div>
 
+<button class="back-to-top" type="button" aria-label="맨 위로 이동">↑</button>
+
 <script>
   const chips = document.querySelectorAll('.chip');
   const body = document.body;
@@ -1299,6 +1344,7 @@ body.filter-alcohol .place.duplicate { display: flex; }
   const languageMenu = document.querySelector('.language-menu');
   const languageCurrent = document.querySelector('.language-current');
   const languageOptions = document.querySelectorAll('.language-option');
+  const backToTopButton = document.querySelector('.back-to-top');
   const sections = Array.from(document.querySelectorAll('.section'));
   const places = Array.from(document.querySelectorAll('.place'));
 
@@ -1617,7 +1663,18 @@ body.filter-alcohol .place.duplicate { display: flex; }
     if (event.key === 'Escape') closeLanguageMenu();
   });
 
+  function updateBackToTop() {
+    backToTopButton.classList.toggle('visible', window.scrollY > 520);
+  }
+
+  backToTopButton.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+
+  window.addEventListener('scroll', updateBackToTop, { passive: true });
+
   applyLanguage(readSavedLanguage() || 'ko');
+  updateBackToTop();
 </script>
 
 </body>

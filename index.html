@@ -1,0 +1,1618 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>행궁동 단골집 · Stay Eego</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Noto+Serif+KR:wght@300;400;500;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css" />
+<style>
+:root {
+  --paper: #F0E9DA;
+  --paper-2: #F6F0E1;
+  --paper-card: #FBF6E9;
+  --ink: #1A1813;
+  --ink-soft: #5A544A;
+  --ink-faint: #8B8478;
+  --accent: #B5392B;
+  --accent-deep: #8A2A1F;
+  --green: #3D4A37;
+  --border: #D5C9AE;
+  --border-strong: #B8AB8C;
+  --container-x: 28px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html {
+  scroll-behavior: smooth;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+body {
+  font-family: "Pretendard Variable", Pretendard, -apple-system, sans-serif;
+  background: var(--paper);
+  color: var(--ink);
+  line-height: 1.7;
+  font-size: 16px;
+  letter-spacing: -0.01em;
+  position: relative;
+  min-height: 100vh;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+  overscroll-behavior-x: none;
+  -webkit-text-size-adjust: 100%;
+}
+
+/* Subtle paper grain */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/%3E%3CfeColorMatrix values='0 0 0 0 0.1, 0 0 0 0 0.08, 0 0 0 0 0.05, 0 0 0 0.5 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.35'/%3E%3C/svg%3E");
+  mix-blend-mode: multiply;
+  opacity: 0.5;
+}
+
+.dancheong {
+  height: 6px;
+  background: repeating-linear-gradient(
+    90deg,
+    var(--accent) 0 24px,
+    var(--green) 24px 48px,
+    #C8923A 48px 72px,
+    var(--ink) 72px 96px
+  );
+  position: relative;
+  z-index: 2;
+}
+
+.language-switcher {
+  position: fixed;
+  top: max(14px, env(safe-area-inset-top));
+  right: max(16px, env(safe-area-inset-right));
+  z-index: 30;
+  font-family: "Cormorant Garamond", "Pretendard Variable", serif;
+}
+
+.language-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 38px;
+  padding: 8px 13px;
+  border: 1px solid rgba(26, 24, 19, 0.24);
+  border-radius: 999px;
+  background: rgba(251, 246, 233, 0.9);
+  color: var(--ink);
+  cursor: pointer;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  box-shadow: 0 10px 24px -18px rgba(26, 24, 19, 0.45);
+  backdrop-filter: blur(10px);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.language-button::after {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-right: 1px solid currentColor;
+  border-bottom: 1px solid currentColor;
+  transform: translateY(-2px) rotate(45deg);
+}
+
+.language-menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  min-width: 148px;
+  padding: 6px;
+  border: 1px solid var(--border-strong);
+  background: rgba(251, 246, 233, 0.98);
+  box-shadow: 0 18px 42px -26px rgba(26, 24, 19, 0.5);
+  border-radius: 12px;
+}
+
+.language-menu[hidden] { display: none; }
+
+.language-option {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 9px 10px;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--ink-soft);
+  cursor: pointer;
+  font: inherit;
+  font-size: 13px;
+  letter-spacing: 0.02em;
+  text-align: left;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.language-option:hover,
+.language-option.active {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+.language-option .code {
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  opacity: 0.72;
+}
+
+.container {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 var(--container-x);
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  min-width: 0;
+}
+
+/* HERO */
+.hero {
+  padding: 80px 0 60px;
+  text-align: center;
+  position: relative;
+}
+
+.meta-top {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-bottom: 32px;
+  font-family: "Cormorant Garamond", serif;
+  font-size: 12px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+.meta-top .line {
+  width: 60px;
+  height: 1px;
+  background: var(--border-strong);
+}
+
+.hero h1 {
+  font-family: "Gowun Batang", "Noto Serif KR", serif;
+  font-weight: 700;
+  font-size: clamp(56px, 9vw, 96px);
+  line-height: 0.95;
+  letter-spacing: -0.04em;
+  margin-bottom: 8px;
+  position: relative;
+}
+
+.hero h1 .accent {
+  color: var(--accent);
+  font-style: italic;
+  font-family: "Gowun Batang", serif;
+}
+
+.hero .sub-en {
+  font-family: "Cormorant Garamond", serif;
+  font-style: italic;
+  font-size: 22px;
+  color: var(--ink-soft);
+  margin-top: 12px;
+  margin-bottom: 36px;
+  letter-spacing: 0.02em;
+}
+
+.hero .count-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 18px;
+  border: 1px solid var(--border-strong);
+  border-radius: 100px;
+  background: var(--paper-2);
+  font-size: 13px;
+  letter-spacing: 0.05em;
+  color: var(--ink-soft);
+  margin-bottom: 40px;
+}
+
+.hero .count-badge strong {
+  color: var(--accent);
+  font-weight: 700;
+  font-family: "Cormorant Garamond", serif;
+  font-size: 16px;
+}
+
+.hero .intro {
+  max-width: 580px;
+  margin: 0 auto;
+  font-size: 16px;
+  color: var(--ink-soft);
+  line-height: 1.85;
+}
+
+.hero .intro em {
+  font-style: italic;
+  font-family: "Gowun Batang", serif;
+  color: var(--accent);
+}
+
+.signature {
+  margin-top: 32px;
+  font-family: "Gowun Batang", serif;
+  font-size: 15px;
+  color: var(--ink-soft);
+  letter-spacing: 0.1em;
+}
+
+.signature::before {
+  content: "—";
+  margin-right: 10px;
+  color: var(--accent);
+}
+
+/* FILTER */
+.filter-bar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: var(--paper);
+  padding: 18px 0 16px;
+  margin: 0 calc(var(--container-x) * -1);
+  border-bottom: 1px solid var(--border);
+  backdrop-filter: blur(8px);
+  max-width: calc(100% + (var(--container-x) * 2));
+}
+
+.filter-bar::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--paper);
+  opacity: 0.92;
+  z-index: -1;
+}
+
+.filter-inner {
+  display: flex;
+  gap: 6px;
+  padding: 0 var(--container-x);
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: none;
+  touch-action: pan-x pan-y;
+  -webkit-overflow-scrolling: touch;
+}
+
+.filter-inner::-webkit-scrollbar { display: none; }
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 18px;
+  border: 1px solid var(--border-strong);
+  background: var(--paper-2);
+  color: var(--ink-soft);
+  font-family: "Gowun Batang", "Noto Serif KR", serif;
+  font-size: 15px;
+  font-weight: 400;
+  border-radius: 100px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  white-space: nowrap;
+  letter-spacing: 0.02em;
+}
+
+.chip:hover {
+  background: var(--paper-card);
+  border-color: var(--ink-soft);
+  color: var(--ink);
+}
+
+.chip.active {
+  background: var(--ink);
+  color: var(--paper);
+  border-color: var(--ink);
+}
+
+.chip .num {
+  font-family: "Cormorant Garamond", serif;
+  font-size: 12px;
+  opacity: 0.7;
+  font-style: italic;
+}
+
+/* SECTION */
+.section {
+  padding: 64px 0 32px;
+}
+
+.section-header {
+  display: flex;
+  align-items: baseline;
+  gap: 24px;
+  margin-bottom: 48px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid var(--border);
+}
+
+.section-header h2 {
+  font-family: "Gowun Batang", "Noto Serif KR", serif;
+  font-weight: 700;
+  font-size: 38px;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+}
+
+.section-header .label-en {
+  font-family: "Cormorant Garamond", serif;
+  font-style: italic;
+  font-size: 16px;
+  color: var(--ink-faint);
+  letter-spacing: 0.08em;
+}
+
+.section-header .count {
+  margin-left: auto;
+  font-family: "Cormorant Garamond", serif;
+  font-style: italic;
+  font-size: 16px;
+  color: var(--accent);
+}
+
+/* GRID */
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 36px 30px;
+  min-width: 0;
+}
+
+@media (max-width: 760px) {
+  :root { --container-x: 20px; }
+  .grid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+  .hero { padding: 72px 0 40px; }
+  .section { padding: 48px 0 24px; }
+  .section-header h2 { font-size: 30px; }
+  .section-header {
+    gap: 10px 14px;
+    flex-wrap: wrap;
+  }
+  .section-header .count {
+    width: 100%;
+    margin-left: 0;
+  }
+  .filter-bar {
+    padding: 14px 0;
+  }
+  .filter-inner {
+    flex-wrap: wrap;
+    overflow: visible;
+    gap: 8px;
+  }
+  .chip {
+    flex: 1 1 calc(33.333% - 8px);
+    justify-content: center;
+    min-width: 0;
+    padding: 9px 10px;
+    font-size: 14px;
+  }
+  .language-switcher {
+    top: max(10px, env(safe-area-inset-top));
+    right: max(10px, env(safe-area-inset-right));
+  }
+  .language-button {
+    min-height: 34px;
+    padding: 7px 10px;
+    font-size: 12px;
+    background: rgba(251, 246, 233, 0.94);
+  }
+  .language-menu {
+    min-width: 138px;
+  }
+}
+
+/* CARD */
+.place {
+  background: var(--paper-card);
+  border: 1px solid var(--border);
+  padding: 32px 28px 28px;
+  position: relative;
+  transition: all 0.35s cubic-bezier(0.2, 0.6, 0.2, 1);
+  display: flex;
+  flex-direction: column;
+  border-radius: 2px;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.place::before {
+  content: "";
+  position: absolute;
+  top: -1px; left: -1px; right: -1px;
+  height: 3px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s ease;
+}
+
+.place:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 32px -16px rgba(26, 24, 19, 0.25);
+}
+
+.place:hover::before {
+  transform: scaleX(1);
+}
+
+.place-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 16px;
+  gap: 12px;
+}
+
+.place-num {
+  font-family: "Cormorant Garamond", serif;
+  font-style: italic;
+  font-size: 14px;
+  color: var(--accent);
+  letter-spacing: 0.05em;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.place-tag {
+  font-family: "Gowun Batang", serif;
+  font-size: 12px;
+  letter-spacing: 0.15em;
+  color: var(--ink-faint);
+  text-transform: uppercase;
+  padding: 4px 0;
+  border-top: 1px solid var(--border);
+  text-align: right;
+}
+
+.place h3 {
+  font-family: "Gowun Batang", "Noto Serif KR", serif;
+  font-weight: 700;
+  font-size: 28px;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  margin-bottom: 18px;
+  color: var(--ink);
+}
+
+.place h3 .also-note {
+  font-family: "Cormorant Garamond", serif;
+  font-size: 13px;
+  font-style: italic;
+  font-weight: 400;
+  color: var(--ink-faint);
+  letter-spacing: 0;
+  white-space: nowrap;
+}
+
+.place-hours {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 6px 12px;
+  margin-bottom: 18px;
+  font-size: 12px;
+  color: var(--ink-soft);
+  letter-spacing: 0.02em;
+}
+
+.place-hours span {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.place-hours span::before {
+  content: "·";
+  color: var(--accent);
+  font-weight: 700;
+}
+
+.place-hours span:first-child::before {
+  content: "○";
+  font-size: 9px;
+}
+
+.place-desc {
+  font-size: 14.5px;
+  line-height: 1.85;
+  color: var(--ink);
+  flex: 1;
+  letter-spacing: -0.005em;
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+}
+
+.place-desc p {
+  margin-bottom: 12px;
+}
+
+.place-desc p:last-child {
+  margin-bottom: 0;
+}
+
+.place-desc em {
+  font-style: normal;
+  color: var(--accent-deep);
+  font-weight: 500;
+  background: linear-gradient(transparent 60%, rgba(181, 57, 43, 0.15) 60%);
+}
+
+.place-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 24px;
+  padding: 10px 18px;
+  background: var(--ink);
+  color: var(--paper);
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  border-radius: 100px;
+  transition: all 0.25s ease;
+  align-self: flex-start;
+}
+
+.place-link:hover {
+  background: var(--accent);
+  transform: translateX(2px);
+}
+
+.place-link .arrow {
+  font-family: "Cormorant Garamond", serif;
+  font-size: 16px;
+  transition: transform 0.25s ease;
+}
+
+.place-link:hover .arrow {
+  transform: translateX(3px);
+}
+
+/* FILTERING */
+body.filter-meal .place:not([data-cat~="meal"]),
+body.filter-meal .section:not([data-section="meal"]),
+body.filter-drink .place:not([data-cat~="drink"]),
+body.filter-drink .section:not([data-section="drink"]),
+body.filter-dessert .place:not([data-cat~="dessert"]),
+body.filter-dessert .section:not([data-section="dessert"]),
+body.filter-alcohol .place:not([data-cat~="alcohol"]),
+body.filter-alcohol .section:not([data-section="alcohol"]),
+body.filter-activity .place:not([data-cat~="activity"]),
+body.filter-activity .section:not([data-section="activity"]) {
+  display: none;
+}
+
+/* 왕대포 duplicate: only show in alcohol filter view */
+.place.duplicate { display: none; }
+body.filter-alcohol .place.duplicate { display: flex; }
+
+/* FOOTER */
+.closing {
+  margin-top: 80px;
+  padding: 80px 0 60px;
+  text-align: center;
+  border-top: 1px solid var(--border);
+  position: relative;
+}
+
+.closing::before {
+  content: "○";
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--paper);
+  color: var(--accent);
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+}
+
+.closing h4 {
+  font-family: "Gowun Batang", serif;
+  font-weight: 400;
+  font-size: 26px;
+  line-height: 1.6;
+  margin-bottom: 20px;
+  color: var(--ink);
+  letter-spacing: -0.01em;
+}
+
+.closing h4 em {
+  font-style: italic;
+  color: var(--accent);
+}
+
+.closing .sign {
+  font-family: "Gowun Batang", serif;
+  font-size: 17px;
+  color: var(--ink-soft);
+  margin-top: 24px;
+}
+
+.closing .footer-meta {
+  margin-top: 40px;
+  font-family: "Cormorant Garamond", serif;
+  font-style: italic;
+  font-size: 13px;
+  letter-spacing: 0.2em;
+  color: var(--ink-faint);
+  text-transform: uppercase;
+}
+
+/* SCROLL ANIMATION */
+.place {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: rise 0.7s cubic-bezier(0.2, 0.6, 0.2, 1) forwards;
+}
+
+@keyframes rise {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.section:nth-of-type(1) .place:nth-child(odd) { animation-delay: 0.05s; }
+.section:nth-of-type(1) .place:nth-child(even) { animation-delay: 0.1s; }
+
+</style>
+</head>
+<body>
+
+<div class="dancheong"></div>
+
+<div class="language-switcher" aria-label="Language selector">
+  <button class="language-button" type="button" aria-haspopup="true" aria-expanded="false">
+    <span class="language-current">KR</span>
+  </button>
+  <div class="language-menu" hidden>
+    <button class="language-option active" type="button" data-lang="ko"><span>Korean</span><span class="code">KR</span></button>
+    <button class="language-option" type="button" data-lang="en"><span>English</span><span class="code">EN</span></button>
+    <button class="language-option" type="button" data-lang="zh"><span>中文</span><span class="code">中文</span></button>
+    <button class="language-option" type="button" data-lang="ja"><span>日本語</span><span class="code">日本</span></button>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- HERO -->
+  <header class="hero">
+    <div class="meta-top">
+      <span class="line"></span>
+      <span>A LOCAL'S GUIDE · STAY EEGO</span>
+      <span class="line"></span>
+    </div>
+
+    <h1>행궁동<br><span class="accent">단골집</span></h1>
+    <div class="sub-en">The host's favorite places, in Haenggung-dong</div>
+
+    <div class="count-badge">
+      호스트 <strong>네네</strong>가 직접 다니는 가게 <strong>31</strong>
+    </div>
+
+    <p class="intro">
+      걷다보면 자연스레 들르게 되는 곳들, 손님이 오시면 꼭 모시고 가는 집들, 
+      그리고 행궁동의 시간이 켜켜이 쌓여있는 노포까지. 
+      30년, 40년, 50년 — 시간을 머금은 가게들이 유난히 많은 동네에서, 
+      <em>저희가 사랑하는 단골집</em>만 모았습니다.
+    </p>
+
+    <div class="signature">행궁동에서, 네네 &amp; 민호</div>
+  </header>
+
+  <!-- FILTER -->
+  <nav class="filter-bar">
+    <div class="filter-inner">
+      <button class="chip active" data-filter="all">전체 <span class="num">31</span></button>
+      <button class="chip" data-filter="meal">식사 <span class="num">14</span></button>
+      <button class="chip" data-filter="drink">음료 <span class="num">4</span></button>
+      <button class="chip" data-filter="dessert">디저트 <span class="num">7</span></button>
+      <button class="chip" data-filter="alcohol">주류 <span class="num">4</span></button>
+      <button class="chip" data-filter="activity">즐길거리 <span class="num">3</span></button>
+    </div>
+  </nav>
+
+  <!-- 식사 -->
+  <section class="section" data-section="meal">
+    <div class="section-header">
+      <h2>식사</h2>
+      <span class="label-en">Meals</span>
+      <span class="count">14 places</span>
+    </div>
+
+    <div class="grid">
+
+      <article class="place" data-cat="meal">
+        <div class="place-head">
+          <span class="place-num">No. 01</span>
+          <span class="place-tag">한식 · 떡볶이</span>
+        </div>
+        <h3>이도경 떡볶이</h3>
+        <div class="place-desc">
+          <p>저희의 추천 메뉴는 <em>"기본 떡볶이 + 쫄면 사리 + 모듬 튀김(+김말이) + 볶음밥"</em>이랍니다 :) 맛있게 매운 소스가 일품이에요! 순한맛도 제법 매워요.</p>
+          <p>튀김은 깔끔한 기름에 튀기는지 기름 냄새가 안나고 튀김옷이 가벼워서 바사삭한 식감이 좋아요. 볶음밥에 쓰는 쌀이 좋아서인지 (비법은 우렁이쌀!) 소스가 밥알에 배여도 질어지지 않고 탱글탱글함을 유지한답니다.</p>
+          <p>떡볶이에 이름을 걸고 자부심 있게 장사하시는 여자 사장님이 귀여우세요.</p>
+        </div>
+        <a class="place-link" href="https://naver.me/xueFGlhD" target="_blank" rel="noopener">네이버 지도 <span class="arrow">→</span></a>
+      </article>
+
+      <article class="place" data-cat="meal">
+        <div class="place-head">
+          <span class="place-num">No. 02</span>
+          <span class="place-tag">한식 · 고깃집</span>
+        </div>
+        <h3>예박사</h3>
+        <div class="place-desc">
+          <p><em>가성비 최고 고깃집.</em> 비싼 수원 갈비 대신 신선하고 맛있는 소갈비살을 합리적인 가격에 먹을 수 있어요.</p>
+          <p>허름한 시장 뒷골목에서 바가지에 고기랑 파채만 팔던, 노상에서 손님들이 목욕탕 의자에 앉아 직접 구워먹던 곳이었는데… 지금은 번듯하게 건물까지 올린 모습을 저를 포함 많은 수원분들이 직접 목격했답니다.</p>
+          <p>시장 노상에서 시작된 성공 신화의 주인공을 소개합니다 :D</p>
+        </div>
+        <a class="place-link" href="https://naver.me/GdJ1gmZd" target="_blank" rel="noopener">네이버 지도 <span class="arrow">→</span></a>
+      </article>
+
+      <article class="place" data-cat="meal">
+        <div class="place-head">
+          <span class="place-num">No. 03</span>
+          <span class="place-tag">한식 · 곱창</span>
+        </div>
+        <h3>입주집</h3>
+        <div class="place-desc">
+          <p><em>50년 이상의 전통을 가진 곱창구이 맛집!</em> 오랜 신뢰를 쌓아온 거래처들을 통해 좋은 물건들을 받아온다고 해요. 깨끗하고 신선한 곱창, 대창, 막창, 거기에 염통까지.</p>
+          <p>특수부위 중의 특수부위인 '소 등골'을 추가 주문해서 드실 수도 있어요. 등골은 하루만 지나도 못 먹을 정도라 취급한다는 것 자체가 선도가 굉장히 좋다는 방증이에요. 단골과 새 손님이 늘 들어와 회전율이 좋기에 가능한 일.</p>
+          <p>날씨가 쌀쌀해지면 <em>곱창 전골</em>도 추천추천입니다 :)</p>
+        </div>
+        <a class="place-link" href="https://naver.me/5iz0zbxF" target="_blank" rel="noopener">네이버 지도 <span class="arrow">→</span></a>
+      </article>
+
+      <article class="place" data-cat="meal">
+        <div class="place-head">
+          <span class="place-num">No. 04</span>
+          <span class="place-tag">한식 · 소금구이</span>
+        </div>
+        <h3>대길소금구이</h3>
+        <div class="place-desc">
+          <p>30년이 넘는 시간 동안 명성을 이어온 <em>수원 소금구이의 자존심.</em></p>
+          <p>생목살소금구이… 제발 드셔주세요… 삼겹살 같은 목살의 맛은 한번 씹으면 다르다는 느낌이 빡! 오실 거예요. 직접 구워주고 썰어주셔서 맛있게 먹기만 하면 됩니다. 명품 양념장은 풍미를 올리는 대길의 킥! 저는 소금만 찍어먹어요. 고기가 진짜 신선하고 부드럽거든요.</p>
+          <p>네네는 염통구이와 돼지 껍데기 구이도 너무 맛있게 먹었어요! 특히 껍데기는 다른 곳에서 보지 못한 비주얼인데… 한 번 확인해보세요 :) 밑반찬도 다양하고 담백해서 마무리로 된장찌개에 밥 비비거나 비빔국수 호로록하면 얼마나 맛있게요!</p>
+        </div>
+        <a class="place-link" href="https://naver.me/GdJi0IXP" target="_blank" rel="noopener">네이버 지도 <span class="arrow">→</span></a>
+      </article>
+
+      <article class="place" data-cat="meal">
+        <div class="place-head">
+          <span class="place-num">No. 05</span>
+          <span class="place-tag">한식 · 평양냉면</span>
+        </div>
+        <h3>평장원</h3>
+        <div class="place-desc">
+          <p>수원의 대표적인 <em>평양냉면 맛집</em>! 모두가 즐길 수 있는 난이도의 평양냉면을 선보입니다. 모든 메뉴가 정갈하고 맛이 좋아 누군가에게 식사 대접할 일이 있으면 꼭 찾게되는 곳. 메뉴도 다양하고 만족도가 모두 좋아요. 골고루 시켜 여럿이 나눠 먹으면 잔치 느낌이 나요 :)</p>
+          <p>사실 네네는 굉장한 만두 덕후인데요, 겨울에 평장원의 <em>만두전골</em> 먹는걸 겨울의 낙 중 하나로 여기고 있답니다.</p>
+          <p>한옥을 개조한 매력있는 공간에서 흩날리는 눈 바라보며 호로록 먹는 만두 전골의 맛을 즐겨보세요.</p>
+        </div>
+        <a class="place-link" href="https://naver.me/5pNEGBFv" target="_blank" rel="noopener">네이버 지도 <span class="arrow">→</span></a>
+      </article>
+
+      <article class="place" data-cat="meal">
+        <div class="place-head">
+          <span class="place-num">No. 06</span>
+          <span class="place-tag">한식 · 칼국수</span>
+        </div>
+        <h3>도레도레 제면소</h3>
+        <div class="place-desc">
+          <p>최고 추천 메뉴는 스지가 잔뜩 들어간 <em>'사골 스지 칼국수'</em>!</p>
+          <p>모든 반찬을 직접 만드신다는데 그 중 최고는 역시… 김치! 칼국수 집에서 김치 맛있으면 끝인거 아닙니까? 밑반찬으로 어머님이 직접 담근 다양한 김치가 나와요. 김치 러버 플레이스!</p>
+          <p>칼국수에 후추를 후추후추 뿌려서 김치랑 후루룩 드셔보세요 :)</p>
+        </div>
+        <a class="place-link" href="https://naver.me/xPvo2OmN" target="_blank" rel="noopener">네이버 지도 <span class="arrow">→</span></a>
+      </article>
+
+      <article class="place" data-cat="meal">
+        <div class="place-head">
+          <span class="place-num">No. 07</span>
+          <span class="place-tag">한식 · 칼국수</span>
+        </div>
+        <h3>대왕칼국수</h3>
+        <div class="place-desc">
+          <p>50년 전통의 시골 칼국수. <em>면을 즐기는 매니아들에게 강력추천!</em> 우선 가격대비 어마무시한 양으로 그 명성이 높답니다. 보통 칼국수가 6,000원이라니… 이거 실화냐… 수준이죠. 일반 여성들은 한 그릇이 살짝 벅찰 정도이니 고무줄 바지 준비!</p>
+          <p>칼국수 보통과 중특은 가격이 같지만 중특에는 계란이 하나 같이 나와요. 단백질 챙기실 분들은 중특.</p>
+          <p>슴슴한 국물 맛에 처음엔 '이거 왜 이렇게 밍숭맹숭하냐…'하지만 중독성 최강… <em>칼국수 계의 평양냉면 같은 맛</em>이랄까요. 깍두기와 신김치는 원하는 만큼 퍼서 드시면 됩니다. 여름 한정 콩국수도 인기 만점!</p>
+        </div>
+        <a class="place-link" href="https://naver.me/FArQrgl3" target="_blank" rel="noopener">네이버 지도 <span class="arrow">→</span></a>
+      </article>
+
+      <article class="place" data-cat="meal alcohol">
+        <div class="place-head">
+          <span class="place-num">No. 08</span>
+          <span class="place-tag">한식 · 막걸리</span>
+        </div>
+        <h3>왕대포</h3>
+        <div class="place-desc">
+          <p>대폿집을 아시나요? 양은 사발에 막걸리를 잔뜩 따라 마시는걸 대폿술이라고 하는데, 그런 대폿술을 파는 곳이 대폿집이에요. <em>막걸리집인거죠!</em></p>
+          <p>그런데 저희는 왕대포에 밥 먹으러 가요. 김치찌개도 다른 요리들도 너무너무 맛있거든요. 밥은 따로 판매 안하셔서 근처 슈퍼나 편의점에서 햇반을 사오셔야 해요.</p>
+          <p>40년의 오래된 이야기들이 담긴 노포에서 즐기는 막걸리와 맛있는 김치찌개. 시간이 멈춘듯한 정취를 즐기기 너무 좋아요. <em>+추가팁) 민호의 강추 메뉴 감자전 위에 얹어진 사장님의 센스와 감성을 느껴보세요!</em></p>
+        </div>
+        <a class="place-link" href="https://naver.me/xkxINC8z" target="_blank" rel="noopener">네이버 지도 <span class="arrow">→</span></a>
+      </article>
+
+      <article class="place" data-cat="meal">
+        <div class="place-head">
+          <span class="place-num">No. 09</span>
+          <span class="place-tag">한식 · 집밥</span>
+        </div>
+        <h3>골목집</h3>
+        <div class="place-desc">
+          <p>맛깔스러운 밑반찬이 깔리는 순간부터 <em>집에서 밥 먹는 듯이 마음이 따땃해지는 곳.</em> 비법 김치로 뭉글뭉글해질 때까지 끓여서 나오는 묵은지찜은 그야말로 밥 도둑이죠.</p>
+          <p>허영만의 식객에도 나왔던 집이라 한동안 자리 잡기가 너무 어려웠어요. 워낙에는 동네 어른들의 사랑방처럼 사용되는 곳이라 왁자지껄한 분위기로 활기가 넘쳐요.</p>
+          <p>제육볶음, 오징어볶음, 고추장 찌개도 맛있어서 집밥 먹고 싶은 분들께 자신있게 추천드립니다.</p>
+        </div>
+        <a class="place-link" href="https://naver.me/GmFV83B5" target="_blank" rel="noopener">네이버 지도 <span class="arrow">→</span></a>
+      </article>
+
+      <article class="place" data-cat="meal">
+        <div class="place-head">
+          <span class="place-num">No. 10</span>
+          <span class="place-tag">한식 · 횟집</span>
+        </div>
+        <h3>서문수산</h3>
+        <div class="place-desc">
+          <p>네네의 <em>최애 횟집 중 한 곳.</em> 철에 맞춰 그때그때 가장 맛 좋은 메뉴들을 추천해 주시니 실패할 리가 없어요! 게다가 집에서 가까워 걸어가기에도 좋은 집 근처 맛집이에요.</p>
+          <p>20년 넘게 운영하신 사장님 가족분들을 믿고 한 번 잡숴 봐! 수산물 시장 공판장도 운영하셔서인지 기본 해산물들도 너무 신선해요. 해산물을 싫어하던 친구들도 해삼, 멍게에 입문시켰다면 말 다 했죠?</p>
+          <p>네네의 최애는 <em>고등어회</em>! 주문이 가능하다면 망설임 없이 주문하세요. 망설이는 건 시간만 낭비하는 것일 뿐, 그 이하도 이상도 아닙니다… 진짜 강려크한 추천. 쌍따봉!</p>
+        </div>
+        <a class="place-link" href="https://naver.me/5o2y2Qrm" target="_blank" rel="noopener">네이버 지도 <span class="arrow">→</span></a>
+      </article>
+
+      <article class="place" data-cat="meal">
+        <div class="place-head">
+          <span class="place-num">No. 11</span>
+          <span class="place-tag">한식 · 쌈밥/회</span>
+        </div>
+        <h3>시골집 우렁이쌈밥</h3>
+        <div class="place-desc">
+          <p>원래 횟집을 오-래 운영하시던 사장님이 좀 살살 일하시려고 쌈밥집으로 바꾸셨다는데, 기존 단골들의 요청이 많아도 그렇게 많아서 회를 다시 팔게 되셨다고 해요. 이제는 배보다 배꼽이 커진 느낌…?</p>
+          <p><em>회 무한리필 메뉴는 예약제</em>로만 운영되고 계절에 따라 회 종류도 그때 그때 달라서 미리 전화해 보고 가세요. 회 종류마다 가격도 달라요.</p>
+          <p>저희는 <em>방어철에 꼭 한 번씩 들르는 편</em>이에요. 손질도 기가 막히고 잘 숙성해서 내놓으시는데, 회도 두툼해서 입에 가득차는 기분이 너무 좋아요. 쌈밥 메뉴도 구성과 맛이 좋아 부담없이 한식 드시기 추천!</p>
+        </div>
+        <a class="place-link" href="https://naver.me/5VeAfb52" target="_blank" rel="noopener">네이버 지도 <span class="arrow">→</span></a>
+      </article>
+
+      <article class="place" data-cat="meal">
+        <div class="place-head">
+          <span class="place-num">No. 12</span>
+          <span class="place-tag">양식 · 베이커리</span>
+        </div>
+        <h3>미트테일</h3>
+        <div class="place-desc">
+          <p><em>화성행궁이 내려다 보이는 최고의 뷰 맛집.</em></p>
+          <p>간식으로 먹기 좋은 저렴한 미트파이는 간단한 식사로도 손색이 없답니다. 직접 만든 파스트라미가 들어간 샌드위치, 잠봉이 올라간 피자도 맛있었어요. 다양한 토핑이 올라간 치아바타도 판매하고 있으니 둘러보세요 :)</p>
+          <p>날씨가 좋은 날에는 <em>루프탑 자리</em>도 추천드립니다!</p>
+        </div>
+        <a class="place-link" href="https://naver.me/FVB0qSiA" target="_blank" rel="noopener">네이버 지도 <span class="arrow">→</span></a>
+      </article>
+
+      <article class="place" data-cat="meal">
+        <div class="place-head">
+          <span class="place-num">No. 13</span>
+          <span class="place-tag">중식 · 만두</span>
+        </div>
+        <h3>연밀</h3>
+        <div class="place-desc">
+          <p>중국 동북 스타일 만두집. 하얼빈에서 오신 중국인 사장님이 운영하시는 <em>만두 전문점</em>이에요. 소룡포로 알려진 육즙만두와 교자만두인 빙화만두가 인기랍니다. 개인적으로 <em>삼치 물만두</em>를 좋아해요.</p>
+          <p>새로운 메뉴 개발에 진심이셔서 계절에 맞게, 혹은 유행에 맞게 새로운 메뉴들을 꾸준하게 소개해주시고 계세요.</p>
+          <p>매해 꾸준히 늘어가는 사장님의 한국어도 지켜보면 즐겁고 흐뭇한 포인트랍니다.</p>
+        </div>
+        <a class="place-link" href="https://naver.me/xnKnewTn" target="_blank" rel="noopener">네이버 지도 <span class="arrow">→</span></a>
+      </article>
+
+      <article class="place" data-cat="meal">
+        <div class="place-head">
+          <span class="place-num">No. 14</span>
+          <span class="place-tag">중식 · 노포</span>
+        </div>
+        <h3>수원만두</h3>
+        <div class="place-desc">
+          <p><em>50년 전통의 대만식 중화요리집.</em> 가볍게 우육탕과 군만두 먹기도 좋고, 요리를 시켜서 거하게 먹기도 좋아요.</p>
+          <p>저희 할머니 할아버지가 꾸준히 다니시던 단골집 중에 하나에요. 집안에 행사 있을 때 종종 가서 시간을 보내기도 했던 추억이 많은 곳이지요.</p>
+          <p><em>오향장육에 군만두 시켜서 먹다가 식사로 우육탕면을 먹으면 아주 나이스한 코스!</em></p>
+        </div>
+        <a class="place-link" href="https://naver.me/Goz5i9mx" target="_blank" rel="noopener">네이버 지도 <span class="arrow">→</span></a>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- 음료 -->
+  <section class="section" data-section="drink">
+    <div class="section-header">
+      <h2>음료</h2>
+      <span class="label-en">Cafés</span>
+      <span class="count">4 places</span>
+    </div>
+
+    <div class="grid">
+
+      <article class="place" data-cat="drink">
+        <div class="place-head">
+          <span class="place-num">No. 15</span>
+          <span class="place-tag">카페 · 스페셜티</span>
+        </div>
+        <h3>노스모크 워드아웃 파이어 유림점</h3>
+        <div class="place-hours">
+          <span>10:30 OPEN</span>
+          <span>20:00 LAST ORDER</span>
+        </div>
+        <div class="place-desc">
+          <p>스페셜티 커피로 유명한 수원 커피 브랜드 <em>노스모크 워드아웃 파이어의 2호점.</em> 팔달산 중턱에서 수원시내 다양한 원두와 맛있는 베이커리들이 준비되어 있어요.</p>
+          <p>저희 집에서 <em>팔달산 산책로를 따라 25분 정도</em> 걷다보면 도착하실 수 있어요! 다양한 베이커리류도 준비되어 있어 커피와 즐기기도 좋답니다.</p>
+          <p>행궁동 주민들의 삶이 그대로 녹아있는 팔달산 산책로를 걷다가 들러서 커피 한 잔 드시면 동네 주민이 된 것 같이 느끼실 거예요!</p>
+        </div>
+        <a class="place-link" href="https://naver.me/GWok9ywU" target="_blank" rel="noopener">네이버 지도 <span class="arrow">→</span></a>
+      </article>
+
+      <article class="place" data-cat="drink">
+        <div class="place-head">
+          <span class="place-num">No. 16</span>
+          <span class="place-tag">카페 · 행궁뷰</span>
+        </div>
+        <h3>위해브투데이</h3>
+        <div class="place-hours">
+          <span>12:00 OPEN</span>
+          <span>20:00 LAST ORDER</span>
+        </div>
+        <div class="place-desc">
+          <p>통창을 통해 비춰지는 <em>화성행궁 뷰가 너무 시원하고 예쁘게 보이는 카페.</em></p>
+          <p>스테이이고에서 걸어서 5분도 안 걸리는 곳에서 화성행궁의 매력을 흠뻑 느끼실 수 있어요.</p>
+          <p>수원 행궁동에 왔다는 느낌 낭낭한 그런 <em>기분적인 기분!</em></p>
+        </div>
+        <a class="place-link" href="https://naver.me/xswyoxmH" target="_blank" rel="noopener">네이버 지도 <span class="arrow">→</span></a>
+      </article>
+
+      <article class="place" data-cat="drink">
+        <div class="place-head">
+          <span class="place-num">No. 17</span>
+          <span class="place-tag">카페 · 재즈</span>
+        </div>
+        <h3>그루비</h3>
+        <div class="place-hours">
+          <span>09:00 OPEN</span>
+          <span>19:00 CLOSE</span>
+        </div>
+        <div class="place-desc">
+          <p>왠지 모르게 있지도 않은 노스텔지어가 느껴지는 공간. <em>딥하고 묵직한 느낌이 가득 담긴 우드 인테리어의 카페.</em></p>
+          <p>제가 좋아하는 재즈 아티스트들의 곡들이 자주 나와 내적 친밀감도 뿜뿜한 곳이에요. <em>빌 에반스, 쳇 베이커, 마일스 데이비스</em>의 음악이 너무나도 잘 어울리는 곳. 낮에도 밤에도 분위기가 좋답니다.</p>
+          <p>밀크티, 프렌치 토스트, 아이스 라떼를 추천해요. 아이스 라떼에는 우유 얼음이 들어가 마시는 내내 밍밍해지지 않아요. 이런 것이 디테일…! 사장님의 취향이 가득 담긴 공간에서 소근소근 차분하게 즐겨보세요. <em>주의! 3인 이상은 출입이 안된답니다.</em></p>
+        </div>
+        <a class="place-link" href="https://naver.me/xi2bbQeF" target="_blank" rel="noopener">네이버 지도 <span class="arrow">→</span></a>
+      </article>
+
+      <article class="place" data-cat="drink">
+        <div class="place-head">
+          <span class="place-num">No. 18</span>
+          <span class="place-tag">카페 · 핸드드립</span>
+        </div>
+        <h3>아우토그라프</h3>
+        <div class="place-hours">
+          <span>11:00 OPEN</span>
+          <span>22:00 CLOSE</span>
+        </div>
+        <div class="place-desc">
+          <p><em>행궁동에서 가장 많은 원두를 소개하는 집.</em> 다양한 원두들을 경험하다보면 커피의 맛이 이렇게 다양하구나 새삼 알 수 있어요. 본인의 커피 취향을 알려주시면 메뉴 고르는 데 도움도 주신답니다.</p>
+          <p>네네의 핸드드립 커피에 대한 관심사를 끌올해주신 곳이에요.. 헤헷. 덕분에 저희는 그날의 픽을 사서 집에서 커피를 내려먹을 수 있게 되었죠!</p>
+          <p>최근에는 근처에 이층 단독주택을 개조한 <em>2호점</em>을 오픈하셨는데, 아지트 느낌의 본점과는 다른 분위기라 또 다른 즐거움이 있어요! 루프탑에서 향긋한 핸드드립 커피를 즐기며 화성 성곽을 바라보면 얼마나 좋은지 몰라요 :-)</p>
+        </div>
+        <a class="place-link" href="https://naver.me/xPpsdvj7" target="_blank" rel="noopener">네이버 지도 <span class="arrow">→</span></a>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- 디저트 -->
+  <section class="section" data-section="dessert">
+    <div class="section-header">
+      <h2>디저트</h2>
+      <span class="label-en">Sweets &amp; Bakery</span>
+      <span class="count">7 places</span>
+    </div>
+
+    <div class="grid">
+
+      <article class="place" data-cat="dessert">
+        <div class="place-head">
+          <span class="place-num">No. 19</span>
+          <span class="place-tag">케이크 · 무스</span>
+        </div>
+        <h3>프리히</h3>
+        <div class="place-desc">
+          <p>예쁘고 맛있는 <em>무스케이크를 전문</em>으로 하시는 곳. 계절감 있는 재료들로 매달 새로운 메뉴들을 선보이고 있습니다.</p>
+          <p>구움과자류들도 맛이 좋아요. <em>핸드드립 커피와 페어링</em>해서 드시는 것을 추천드려요!</p>
+        </div>
+        <a class="place-link" href="https://naver.me/56DMplQE" target="_blank" rel="noopener">네이버 지도 <span class="arrow">→</span></a>
+      </article>
+
+      <article class="place" data-cat="dessert">
+        <div class="place-head">
+          <span class="place-num">No. 20</span>
+          <span class="place-tag">케이크 · 레터링</span>
+        </div>
+        <h3>원모어케이크</h3>
+        <div class="place-desc">
+          <p><em>행궁동 레터링 케이크 1인자.</em> 기가 막힌 기계 같은 레터링 솜씨로 특별한 날을 더 특별하게 만들어줄 케이크를 만들어주십니다!</p>
+          <p>케이크 맛도 좋으니 이야말로 일석이조! 특별한 날 케이크가 필요하시다면 원모어에서 <em>미리</em> 케이크를 준비하세요.</p>
+        </div>
+        <a class="place-link" href="https://naver.me/xaPoRQF8" target="_blank" rel="noopener">네이버 지도 <span class="arrow">→</span></a>
+      </article>
+
+      <article class="place" data-cat="dessert">
+        <div class="place-head">
+          <span class="place-num">No. 21</span>
+          <span class="place-tag">쿠키 · 스콘</span>
+        </div>
+        <h3>파트브리제</h3>
+        <div class="place-desc">
+          <p><em>장모님 최애 쿠키집.</em> 스콘이 맛있어요.</p>
+          <p>모든 메뉴들을 추천하지만, 첫 방문은 역시 클래식! <em>클래식 휘낭시에와 클래식 스콘</em>을 추천해요 :)</p>
+        </div>
+        <a class="place-link" href="https://naver.me/5LurxFhG" target="_blank" rel="noopener">네이버 지도 <span class="arrow">→</span></a>
+      </article>
+
+      <article class="place" data-cat="dessert">
+        <div class="place-head">
+          <span class="place-num">No. 22</span>
+          <span class="place-tag">빵 · 사워도우</span>
+        </div>
+        <h3>에버닌</h3>
+        <div class="place-desc">
+          <p>빵을 참 <em>정직하게 잘 만드는</em> 부지런한 이웃, 동네 빵집. 천연 효모로 빵을 만들어서 밀가루 음식인데도 먹은 후 속이 편해요.</p>
+          <p>네네의 최애 메뉴는 <em>통밀 100%의 사워도우</em>! 담백하지만 씹을수록 고소한 맨빵의 매력이 너무너무 좋아요. 블루베리 크림치즈가 샌드되어 있는 '블루베리 바게트'도 인기 메뉴랍니다.</p>
+          <p>그런데 솔직히… 다 맛있어요 헤헷.</p>
+        </div>
+        <a class="place-link" href="https://naver.me/G14K0iXK" target="_blank" rel="noopener">네이버 지도 <span class="arrow">→</span></a>
+      </article>
+
+      <article class="place" data-cat="dessert">
+        <div class="place-head">
+          <span class="place-num">No. 23</span>
+          <span class="place-tag">빵 · 소금빵</span>
+        </div>
+        <h3>솔트 팩토리</h3>
+        <div class="place-desc">
+          <p>행궁동에 새롭게 나타난 <em>소금빵 전문점.</em> 인스타그램에 갓 구운 소금빵이 언제 나오는지 알 수 있어요.</p>
+          <p>시간 맞춰 방문하시면 정말 <em>궁극의 소금빵</em>을 만나게 될 수도…? 한적한 행궁동의 골목에서 만나는 고소한 소금빵을 기대해주세요.</p>
+        </div>
+        <a class="place-link" href="https://naver.me/FawYzdmj" target="_blank" rel="noopener">네이버 지도 <span class="arrow">→</span></a>
+      </article>
+
+      <article class="place" data-cat="dessert">
+        <div class="place-head">
+          <span class="place-num">No. 24</span>
+          <span class="place-tag">츄러스 · 인절미</span>
+        </div>
+        <h3>츄플러스</h3>
+        <div class="place-desc">
+          <p>분명 겉으로 보면 어디서나 자주 보던 츄러스인데… 뭔가 약간 통통한 것이…? 한입 베어물면 <em>쫄깃쫄깃 인절미 같은 식감</em>이 중독적인 츄러스집. 반죽에 찹쌀을 넣어서 이렇게 재미있는 식감을 만들었다고 해요!</p>
+          <p><em>인절미 콩가루 듬뿍 묻힌 츄러스</em>가 저의 최애랍니다.</p>
+          <p>츄러스 하나 주문해서 바로 근처에 있는 커다란 느티나무 아래 벤치에 앉아 뇸뇸뇸 먹으면서 행궁동만의 여유를 느껴보세요.</p>
+        </div>
+        <a class="place-link" href="https://naver.me/IxDJNjoH" target="_blank" rel="noopener">네이버 지도 <span class="arrow">→</span></a>
+      </article>
+
+      <article class="place" data-cat="dessert">
+        <div class="place-head">
+          <span class="place-num">No. 25</span>
+          <span class="place-tag">디저트 · 동네</span>
+        </div>
+        <h3>딩동</h3>
+        <div class="place-desc">
+          <p>행궁동 주민들이 인정한 <em>숨은 디저트 강자.</em></p>
+          <p>좋은 재료를 사용해서 정직하게 만드시는, 기교를 부리지 않고 디저트 본연의 모습을 보여주시기 위해 노력하는 곳이에요.</p>
+          <p>동네 사람들이 꾸준히 찾는 <em>마을이 애정하는 가게</em>랍니다.</p>
+        </div>
+        <a class="place-link" href="https://naver.me/5JVWRJlk" target="_blank" rel="noopener">네이버 지도 <span class="arrow">→</span></a>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- 주류 -->
+  <section class="section" data-section="alcohol">
+    <div class="section-header">
+      <h2>주류</h2>
+      <span class="label-en">Drinks &amp; Pubs</span>
+      <span class="count">4 places</span>
+    </div>
+
+    <div class="grid">
+
+      <article class="place" data-cat="alcohol">
+        <div class="place-head">
+          <span class="place-num">No. 26</span>
+          <span class="place-tag">선술집 · 니혼슈</span>
+        </div>
+        <h3>사케도로보</h3>
+        <div class="place-desc">
+          <p>일본인 며느리의 검증을 받아 오리지날 레시피를 구연한 <em>모츠나베 선술집.</em> 다양한 니혼슈를 함께 즐길 수 있어요.</p>
+          <p>모츠나베도 맛있지만 <em>오사카식 오코노미야끼나 닭날개 튀김인 테바사키</em>도 맥주 안주로 끝내줍니다!</p>
+        </div>
+        <a class="place-link" href="https://naver.me/FHA0Gbwz" target="_blank" rel="noopener">네이버 지도 <span class="arrow">→</span></a>
+      </article>
+
+      <article class="place" data-cat="alcohol">
+        <div class="place-head">
+          <span class="place-num">No. 27</span>
+          <span class="place-tag">술집 · 골뱅이</span>
+        </div>
+        <h3>유동골뱅이</h3>
+        <div class="place-desc">
+          <p>수원 사람들은 다 아는 <em>왕골뱅이집.</em> 여기도 거의 30년 가까이 한 자리에서 영업 중이신 남문의 터줏대감이에요!</p>
+          <p>백골뱅이탕도 맛있고 골뱅이 오이 무침도 맛있답니다.</p>
+          <p>작은 공간에 테이블이 다닥다닥 붙어 있어서 조용한 분위기는 아니지만, 왠지 <em>생동감이 느껴지는, 삶의 활력이 느껴지는 곳</em>이에요.</p>
+        </div>
+        <a class="place-link" href="https://naver.me/xcKJRe7R" target="_blank" rel="noopener">네이버 지도 <span class="arrow">→</span></a>
+      </article>
+
+      <article class="place" data-cat="alcohol">
+        <div class="place-head">
+          <span class="place-num">No. 28</span>
+          <span class="place-tag">전통주점 · 노포</span>
+        </div>
+        <h3>산적</h3>
+        <div class="place-desc">
+          <p>행궁동이라는 이름이 생기기 전부터 있던 <em>행궁동 0.5세대 전통주점.</em> 여러 안주들로 당시부터 많은 애주가들을 만족시켜오셨답니다.</p>
+          <p>가장 인기 메뉴는 누가 뭐라해도 <em>"육해공 우동볶음 + 치즈감자전"의 콤비네이션.</em></p>
+          <p>여기에 막걸리나 동동주를 드시면 행궁동의 올드스쿨 바이브 제대로 느낄 수 있어요.</p>
+        </div>
+        <a class="place-link" href="https://naver.me/FqSHIu8p" target="_blank" rel="noopener">네이버 지도 <span class="arrow">→</span></a>
+      </article>
+
+      <article class="place duplicate" data-cat="alcohol">
+        <div class="place-head">
+          <span class="place-num">No. 08</span>
+          <span class="place-tag">막걸리 · 대폿집</span>
+        </div>
+        <h3>왕대포 <span style="font-size: 13px; color: var(--ink-faint); letter-spacing: 0; font-family: 'Cormorant Garamond', serif; font-style: italic;">· also in 식사</span></h3>
+        <div class="place-desc">
+          <p>30년 넘게 장사하신 사장님의 <em>손맛을 느껴보세요.</em> 김치까지 직접 담그시는 정성이 대단한 집입니다.</p>
+          <p>연세가 좀 있으셔서 메뉴가 나오는 데에는 시간이 많이 걸리지만 <em>모듬전을 포함한 모든 안주들은 그 시간을 보상해주는 듯한 맛.</em></p>
+          <p>+추가팁) 민호의 강추 메뉴 감자전 위에 얹어진 사장님의 센스와 감성을 느껴보세요!</p>
+        </div>
+        <a class="place-link" href="https://naver.me/xkxINC8z" target="_blank" rel="noopener">네이버 지도 <span class="arrow">→</span></a>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- 즐길거리 -->
+  <section class="section" data-section="activity">
+    <div class="section-header">
+      <h2>즐길거리</h2>
+      <span class="label-en">Things to do</span>
+      <span class="count">3 places</span>
+    </div>
+
+    <div class="grid">
+
+      <article class="place" data-cat="activity">
+        <div class="place-head">
+          <span class="place-num">No. 29</span>
+          <span class="place-tag">독립서점</span>
+        </div>
+        <h3>브로콜리숲</h3>
+        <div class="place-desc">
+          <p><em>행궁동 터줏대감 독립서점.</em> 운영하신지 벌써 6년도 더 됐어요!</p>
+          <p>고양이들을 좋아하시는 사장님들이 운영하시는 곳으로, 골목길에서 사랑받으며 지내는 <em>길고양이들</em>도 보실 수 있답니다.</p>
+          <p>사장님들이 출판계 쪽에 계시던 덕인지 좋은 책을 고르는 안목도 좋으시고, 유명 작가분들과의 이벤트도 종종 운영하시더라구요!</p>
+        </div>
+        <a class="place-link" href="https://naver.me/FxLX39WT" target="_blank" rel="noopener">네이버 지도 <span class="arrow">→</span></a>
+      </article>
+
+      <article class="place" data-cat="activity">
+        <div class="place-head">
+          <span class="place-num">No. 30</span>
+          <span class="place-tag">식물 · 플라워샵</span>
+        </div>
+        <h3>서아샵</h3>
+        <div class="place-desc">
+          <p>네네가 가장 많은 돈을 쓴 곳이 아닐지…! 동네 가장 단골집인 <em>식물원</em>이에요. 화분에 담긴 아이들은 거의 다 서아샵 출신이라는… (소근소근)</p>
+          <p>실력 있는 사장님의 안목을 믿고 선물용 꽃다발도 자주 주문한답니다! 만원짜리부터 큰 화분까지, 모두 만족하실 거예요!</p>
+          <p>네네는 <em>여행지에서 꽃을 사는 걸 좋아해요</em> ☺️ 현지인 기분이 들기도 하고, 심심해질 수도 있는 여행에 약간의 생기를 주기도 하는 것 같거든요! 여러분도 그런 에너지를 서아샵에서 잡아가세요!</p>
+        </div>
+        <a class="place-link" href="https://naver.me/xswGXFCV" target="_blank" rel="noopener">네이버 지도 <span class="arrow">→</span></a>
+      </article>
+
+      <article class="place" data-cat="activity">
+        <div class="place-head">
+          <span class="place-num">No. 31</span>
+          <span class="place-tag">재즈 · 라이브</span>
+        </div>
+        <h3>파닥파닥클럽</h3>
+        <div class="place-desc">
+          <p>수원 행궁동에서 <em>매주 금, 토, 일요일 저녁에 재즈 라이브 공연</em>을 즐길 수 있어요!</p>
+          <p>인스타 페이지로 셋 리스트를 확인하실 수 있답니다. 네이버를 통해 예약하신 후 즐기시길 바랍니다 :)</p>
+          <p>부담 없이 가벼운 마음으로, 작은 공간에서 가깝게 라이브 음악을 즐길 수 있는 <em>행궁동의 자랑 파닥파닥클럽</em>을 놓치지 마세요!</p>
+        </div>
+        <a class="place-link" href="https://naver.me/xkqXpjcu" target="_blank" rel="noopener">네이버 지도 <span class="arrow">→</span></a>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- CLOSING -->
+  <footer class="closing">
+    <h4>행궁동에서<br><em>좋은 시간 보내세요.</em></h4>
+    <p style="color: var(--ink-soft); max-width: 480px; margin: 0 auto; font-size: 15px;">
+      이 리스트는 저희가 직접 다니며 천천히 쌓인 단골집들이에요. 
+      여러분의 행궁동에도 새로운 단골이 생기기를 :)
+    </p>
+    <div class="sign">— 네네 &amp; 민호 · Stay Eego</div>
+    <div class="footer-meta">Haenggung-dong, Suwon · 2026 Edition</div>
+  </footer>
+
+</div>
+
+<div class="dancheong" style="margin-top: 40px;"></div>
+
+<script>
+  const chips = document.querySelectorAll('.chip');
+  const body = document.body;
+  const languageButton = document.querySelector('.language-button');
+  const languageMenu = document.querySelector('.language-menu');
+  const languageCurrent = document.querySelector('.language-current');
+  const languageOptions = document.querySelectorAll('.language-option');
+  const sections = Array.from(document.querySelectorAll('.section'));
+  const places = Array.from(document.querySelectorAll('.place'));
+
+  const sourceCards = places.map(place => ({
+    tag: place.querySelector('.place-tag').innerHTML,
+    title: place.querySelector('h3').innerHTML,
+    desc: Array.from(place.querySelectorAll('.place-desc p')).map(p => p.innerHTML)
+  }));
+
+  const copy = {
+    ko: {
+      code: 'KR',
+      htmlLang: 'ko',
+      meta: 'A LOCAL\'S GUIDE · STAY EEGO',
+      title: '행궁동<br><span class="accent">단골집</span>',
+      subtitle: 'The host\'s favorite places, in Haenggung-dong',
+      badge: '호스트 <strong>네네</strong>가 직접 다니는 가게 <strong>31</strong>',
+      intro: '걷다보면 자연스레 들르게 되는 곳들, 손님이 오시면 꼭 모시고 가는 집들, 그리고 행궁동의 시간이 켜켜이 쌓여있는 노포까지. 30년, 40년, 50년 — 시간을 머금은 가게들이 유난히 많은 동네에서, <em>저희가 사랑하는 단골집</em>만 모았습니다.',
+      signature: '행궁동에서, 네네 &amp; 민호',
+      filters: [
+        ['전체', '31'], ['식사', '14'], ['음료', '4'], ['디저트', '7'], ['주류', '4'], ['즐길거리', '3']
+      ],
+      sections: {
+        meal: ['식사', 'Meals', '14 places'],
+        drink: ['음료', 'Cafés', '4 places'],
+        dessert: ['디저트', 'Sweets &amp; Bakery', '7 places'],
+        alcohol: ['주류', 'Drinks &amp; Pubs', '4 places'],
+        activity: ['즐길거리', 'Things to do', '3 places']
+      },
+      map: '네이버 지도',
+      cards: sourceCards
+    },
+    en: {
+      code: 'EN',
+      htmlLang: 'en',
+      meta: 'A LOCAL\'S GUIDE · STAY EEGO',
+      title: 'Haenggung-dong<br><span class="accent">Regulars</span>',
+      subtitle: 'The host\'s favorite places, in Haenggung-dong',
+      badge: '<strong>31</strong> places host <strong>Nene</strong> actually goes to',
+      intro: 'Places we somehow drift into on a walk, places we always bring guests, and old shops where Haenggung-dong time has settled layer by layer. In a neighborhood full of 30-, 40-, and 50-year stories, we gathered only <em>the regular spots we genuinely love</em>.',
+      signature: 'From Haenggung-dong, Nene &amp; Minho',
+      filters: [
+        ['All', '31'], ['Meals', '14'], ['Coffee', '4'], ['Sweets', '7'], ['Drinks', '4'], ['To do', '3']
+      ],
+      sections: {
+        meal: ['Meals', 'For a proper bite', '14 places'],
+        drink: ['Coffee', 'Cafés', '4 places'],
+        dessert: ['Sweets', 'Sweets &amp; Bakery', '7 places'],
+        alcohol: ['Drinks', 'Pubs &amp; old-school bars', '4 places'],
+        activity: ['To do', 'Bookshops, plants, jazz', '3 places']
+      },
+      map: 'Naver Map',
+      cards: [
+        { tag: `Korean · Tteokbokki`, title: `Yidokyeong Tteokbokki`, desc: [`Our go-to order is <em>"classic tteokbokki + jjolmyeon noodles + assorted fried bites (+ seaweed roll) + fried rice"</em> :) The sauce is deliciously spicy. Even the mild version has a proper kick.`, `The fried bits taste clean, with none of that heavy oil smell, and the batter stays light and crackly. The fried rice uses good rice (the secret is mud-snail rice!), so even after soaking up the sauce, every grain stays springy instead of turning mushy.`, `The woman who runs the place has her name on the tteokbokki and sells it with real pride. She is adorable.`] },
+        { tag: `Korean · Grilled beef`, title: `Yebaksa`, desc: [`<em>A great-value grilled meat spot.</em> Instead of splurging on famous Suwon galbi, you can eat fresh, tasty beef rib meat at a sensible price.`, `It started in a scruffy market alley, selling meat and scallion salad from plastic tubs, with customers grilling outside on bathhouse stools. Now they have a proper building. Many Suwon locals, including me, watched that glow-up happen in real time.`, `Here is the little market-street success story we love to introduce :D`] },
+        { tag: `Korean · Gopchang`, title: `Ipjujip`, desc: [`<em>A grilled gopchang institution with over 50 years behind it!</em> They source good product through trusted suppliers built up over decades. Clean, fresh gopchang, daechang, makchang, and even heart.`, `You can also order beef spinal cord, a true specialty among specialty cuts. It goes bad so quickly that even carrying it is proof the turnover and freshness are serious. That is possible because regulars and new guests keep the tables moving.`, `When the weather turns chilly, the <em>gopchang hot pot</em> is also highly, highly recommended :)`] },
+        { tag: `Korean · Salt-grilled pork`, title: `Daegil Sogeumgui`, desc: [`For more than 30 years, this place has carried the pride of <em>Suwon-style salt-grilled pork.</em>`, `Please, please try the fresh pork neck grilled with salt. It eats almost like pork belly, but one bite tells you it is different. They grill and cut it for you, so your only job is to enjoy. Their signature dipping sauce adds the kick, though I just go with salt because the meat is that fresh and tender.`, `Nene also loved the grilled heart and pork skin. The skin in particular looks unlike anything we have seen elsewhere, so check it out :) The side dishes are generous and clean. Finish with rice mixed into doenjang stew, or slurp some bibim noodles and you will understand.`] },
+        { tag: `Korean · Pyongyang naengmyeon`, title: `Pyeongjangwon`, desc: [`One of Suwon's representative <em>Pyongyang naengmyeon restaurants</em>! Their version is gentle enough for everyone to enjoy. Everything is tidy and tasty, so this is where we go when we want to treat someone to a proper meal. Order a spread and share it around, and it feels like a small feast :)`, `Nene is actually a serious dumpling person, and eating Pyeongjangwon's <em>mandu hot pot</em> in winter is one of her seasonal joys.`, `Try it in the charming hanok-converted space, watching snow drift outside while you sip the dumpling broth.`] },
+        { tag: `Korean · Kalguksu`, title: `Doredore Noodle House`, desc: [`The top recommendation is <em>"beef tendon kalguksu in bone broth"</em>, loaded with tendon!`, `They say every side dish is made in-house, and the best of them is, of course... kimchi. If the kimchi is good at a kalguksu place, isn't that basically game over? You get a variety of mother-made kimchi as sides. A kimchi-lover place!`, `Sprinkle plenty of pepper over the noodles and slurp them down with kimchi :)`] },
+        { tag: `Korean · Kalguksu`, title: `Daewang Kalguksu`, desc: [`A country-style kalguksu spot with 50 years of history. <em>Strongly recommended for noodle people!</em> First of all, the portion is massive for the price. A regular bowl for 6,000 won... is this real life? For many women, one bowl is a bit of a climb, so wear stretchy pants.`, `The regular and extra-large bowls cost the same, but the extra-large comes with an egg. Choose that if you want the protein.`, `The broth tastes so mild that at first you may think, "Why is this so quiet...?" but then it sneaks up on you. <em>It is like the Pyongyang naengmyeon of kalguksu.</em> Help yourself to as much kkakdugi and sour kimchi as you want. The summer-only kongguksu is also a hit!`] },
+        { tag: `Korean · Makgeolli`, title: `Wangdaepo`, desc: [`Do you know what a daepotjip is? Daepot-sul means drinking a generous bowl of makgeolli from a metal bowl, and a daepotjip is the kind of place that serves it. <em>In short, a makgeolli house!</em>`, `But we go to Wangdaepo to eat. The kimchi stew and other dishes are that good. They do not sell rice, so pick up instant rice from a nearby supermarket or convenience store.`, `Makgeolli and delicious kimchi stew in an old shop holding 40 years of stories. It is perfect for enjoying a mood where time seems to pause. <em>Extra tip: try Minho's strong recommendation, the potato pancake, and notice the owner's little sense and heart on top!</em>`] },
+        { tag: `Korean · Home cooking`, title: `Golmokjip`, desc: [`The moment the tasty side dishes land, <em>it feels warm, like eating at home.</em> Their aged-kimchi braised dish, simmered until everything turns soft and deep, is a full-on rice thief.`, `It was featured in Huh Young-man's Sikgaek, so for a while it was nearly impossible to get a seat. It has long been used like a neighborhood elders' gathering room, so the place is loud, lively, and full of energy.`, `The spicy pork, stir-fried squid, and gochujang stew are all good. We confidently recommend it when you want a Korean home-style meal.`] },
+        { tag: `Korean · Seafood`, title: `Seomun Susan`, desc: [`One of <em>Nene's favorite sashimi spots.</em> They recommend whatever is best in season, so it is hard to miss. It is also close to home, which makes it a perfect walkable neighborhood favorite.`, `Trust the owner's family, who have run it for over 20 years, and just try it once! Maybe because they also operate in the seafood market auction scene, even the basic seafood is incredibly fresh. If they got friends who disliked seafood into sea cucumber and sea squirt, that says plenty, right?`, `Nene's favorite is <em>mackerel sashimi</em>! If it is available, order it without hesitation. Hesitating only wastes time. A very strong recommendation. Double thumbs up!`] },
+        { tag: `Korean · Ssam-bap / sashimi`, title: `Sigoljip Ureongi Ssam-bap`, desc: [`The owner originally ran a sashimi restaurant for a long time, then switched to ssam-bap to work a little more gently. But the old regulars asked for sashimi again so much that it came back. Now it almost feels like the side business became the main thing...?`, `<em>The all-you-can-eat sashimi menu is reservation-only</em>, and the fish changes by season, so call ahead before going. Prices vary by fish, too.`, `We make sure to stop by <em>during yellowtail season</em>. The knife work is excellent, the aging is spot-on, and the slices are thick enough to fill your mouth in the best way. The ssam-bap is also well composed and tasty, so it is an easy Korean meal recommendation.`] },
+        { tag: `Western · Bakery`, title: `Meat Tale`, desc: [`<em>A view restaurant in every sense, looking down over Hwaseong Haenggung.</em>`, `Their inexpensive meat pies are great as a snack and filling enough for a light meal. The house-made pastrami sandwich, jambon pizza, and ciabatta with various toppings were all good, so take a look around :)`, `On a nice day, <em>the rooftop seats</em> are the move!`] },
+        { tag: `Chinese · Dumplings`, title: `Yeonmil`, desc: [`A Northeast Chinese dumpling house run by a Chinese owner from Harbin. It is a <em>dumpling specialist</em>. The juicy soup dumplings and crispy-bottomed binghua dumplings are popular, and personally I love the <em>Spanish mackerel boiled dumplings</em>.`, `They are serious about developing new dishes, and they keep introducing seasonal or trend-aware menus.`, `Watching the owner's Korean improve year by year is also a sweet, quietly happy point.`] },
+        { tag: `Chinese · Old favorite`, title: `Suwon Mandu`, desc: [`<em>A Taiwanese-style Chinese restaurant with 50 years of tradition.</em> It is good for a casual bowl of beef soup and fried dumplings, or for ordering dishes and making it a big meal.`, `It is one of the regular places my grandparents kept going to. We also spent time there for family occasions, so it holds a lot of memories.`, `<em>Order five-spice sliced pork and fried dumplings, then finish with beef noodle soup. That is a very nice course!</em>`] },
+        { tag: `Cafe · Specialty`, title: `No Smoke Without Fire, Yurim`, desc: [`The second branch of the Suwon coffee brand <em>No Smoke Without Fire</em>, known for specialty coffee. Halfway up Paldalsan, it has a variety of beans and tasty bakery items.`, `From our house, you can reach it by walking <em>about 25 minutes along the Paldalsan trail</em>! There are plenty of baked goods, so it is great with coffee.`, `Stop by after walking the Paldalsan trail, where the lives of Haenggung-dong residents are quietly folded in, and a cup of coffee may make you feel almost local.`] },
+        { tag: `Cafe · Haenggung view`, title: `We Have Today`, desc: [`A cafe where the <em>view of Hwaseong Haenggung through the wide windows feels open and beautiful.</em>`, `Less than a five-minute walk from Stay Eego, you can soak up the charm of Hwaseong Haenggung.`, `It gives you that very full, very Haenggung-dong kind of feeling.`] },
+        { tag: `Cafe · Jazz`, title: `Groovy`, desc: [`A space that somehow gives you nostalgia for something you never even had. <em>A cafe full of deep, weighty wood interiors.</em>`, `Music by jazz artists I love often plays here, so I feel an instant private closeness to it. <em>Bill Evans, Chet Baker, Miles Davis</em> fit the room perfectly. The mood is good by day and by night.`, `We recommend the milk tea, French toast, and iced latte. The iced latte uses milk ice, so it does not get watery as you drink. That is the detail...! Enjoy it quietly in a space full of the owner's taste. <em>Note: groups of three or more are not allowed.</em>`] },
+        { tag: `Cafe · Hand drip`, title: `Autograph`, desc: [`<em>The place in Haenggung-dong with the widest range of beans.</em> Try different beans and you realize again how varied coffee can be. Tell them what you like, and they will help you choose.`, `This is the place that pulled Nene deeper into hand-drip coffee... hehe. Thanks to them, we now buy the day's pick and brew coffee at home.`, `Recently they opened a <em>second branch</em> in a renovated two-story detached house nearby. It has a different pleasure from the hideout feel of the original. Drinking fragrant hand-drip coffee on the rooftop while looking at the Hwaseong fortress walls is so, so good :-)`] },
+        { tag: `Cake · Mousse`, title: `Freeh`, desc: [`A place specializing in <em>pretty, delicious mousse cakes</em>. They introduce new menus every month with seasonal ingredients.`, `Their baked sweets are good too. We recommend pairing them with <em>hand-drip coffee</em>!`] },
+        { tag: `Cake · Lettering`, title: `One More Cake`, desc: [`<em>The number-one lettering cake shop in Haenggung-dong.</em> Their almost machine-perfect lettering turns special days into even more special ones.`, `The cakes taste good too, so it is a true two-for-one. If you need a cake for a special day, prepare it <em>in advance</em> at One More.`] },
+        { tag: `Cookies · Scones`, title: `Pate Brisee`, desc: [`<em>My mother-in-law's favorite cookie shop.</em> The scones are good.`, `We recommend everything, but for a first visit, classic is classic! Try the <em>classic financier and classic scone</em> :)`] },
+        { tag: `Bread · Sourdough`, title: `Everneen`, desc: [`A diligent neighborhood bakery that makes bread <em>honestly and very well</em>. They use natural yeast, so even though it is flour, your stomach feels comfortable afterward.`, `Nene's favorite is the <em>100% whole-wheat sourdough</em>! It is plain and clean, but the more you chew, the nuttier it gets. The blueberry baguette with blueberry cream cheese is also popular.`, `Honestly though... everything is good. Hehe.`] },
+        { tag: `Bread · Salt bread`, title: `Salt Factory`, desc: [`A new <em>salt bread specialist</em> in Haenggung-dong. You can check Instagram to see when the fresh batches come out.`, `If you time your visit right, you may meet <em>the ultimate salt bread</em>...? Look forward to a buttery, nutty salt bread in a quiet Haenggung-dong alley.`] },
+        { tag: `Churros · Injeolmi`, title: `Chuplus`, desc: [`From the outside it looks like the churros you have seen everywhere... but maybe a little plumper...? Take a bite and the <em>chewy, injeolmi-like texture</em> becomes addictive. They add glutinous rice flour to the dough to make that fun texture!`, `<em>The churro covered generously in injeolmi soybean powder</em> is my favorite.`, `Order one churro, sit on the bench under the big zelkova tree nearby, munch away, and feel Haenggung-dong's easy pace.`] },
+        { tag: `Dessert · Neighborhood`, title: `Dingdong`, desc: [`<em>A hidden dessert powerhouse</em> recognized by Haenggung-dong locals.`, `They use good ingredients and make things honestly, without tricks, trying to show dessert as dessert should be.`, `It is <em>a shop loved by the village</em>, one that locals keep returning to.`] },
+        { tag: `Izakaya · Nihonshu`, title: `Sakedorobo`, desc: [`A <em>motsunabe izakaya</em> whose original recipe was approved by a Japanese daughter-in-law. You can enjoy a variety of nihonshu with it.`, `The motsunabe is good, but the <em>Osaka-style okonomiyaki and tebasaki chicken wings</em> are killer with beer, too!`] },
+        { tag: `Pub · Sea snails`, title: `Yudong Golbaengi`, desc: [`A <em>big sea-snail place</em> every Suwon person knows. This is another long-standing Nammun regular, operating in the same spot for nearly 30 years!`, `The white sea-snail soup is good, and the sea-snail cucumber salad is good too.`, `The small room has tables packed close together, so it is not quiet, but somehow it feels <em>alive, full of the energy of daily life</em>.`] },
+        { tag: `Traditional pub · Old school`, title: `Sanjeok`, desc: [`A <em>Haenggung-dong generation-0.5 traditional pub</em> that existed before the neighborhood even had this name. Since then, its many snacks have kept drink lovers happy.`, `The most popular order is, no contest, the combination of <em>"land-sea-air stir-fried udon + cheese potato pancake."</em>`, `Add makgeolli or dongdongju and you get the proper old-school Haenggung-dong vibe.`] },
+        { tag: `Makgeolli · Daepotjip`, title: `Wangdaepo <span class="also-note">· also in Meals</span>`, desc: [`Taste the <em>handmade touch of an owner who has cooked for over 30 years.</em> Even the kimchi is made in-house, and that care shows.`, `The owner is older, so dishes can take a while, but <em>every snack, including the assorted jeon, tastes like it pays you back for the wait.</em>`, `Extra tip: try Minho's strong recommendation, the potato pancake, and notice the owner's little sense and heart on top!`] },
+        { tag: `Independent bookstore`, title: `Broccoli Forest`, desc: [`<em>A Haenggung-dong fixture of an independent bookstore.</em> It has already been running for more than six years!`, `The owners love cats, so you may also meet the <em>street cats</em> loved around the alley.`, `Maybe because the owners came from the publishing world, they have a good eye for books and often host events with well-known writers.`] },
+        { tag: `Plants · Flower shop`, title: `Seoa Shop`, desc: [`This may be the place where Nene has spent the most money...! It is our most-visited neighborhood <em>plant shop</em>. Almost all of our potted kids came from Seoa Shop... (whisper whisper)`, `We trust the talented owner's eye and often order bouquets as gifts. From 10,000-won bunches to large pots, you will be satisfied!`, `Nene <em>likes buying flowers while traveling</em>. It makes you feel a little local and gives a trip, which can sometimes go flat, a bit of life. Pick up that energy at Seoa Shop!`] },
+        { tag: `Jazz · Live`, title: `Padak Padak Club`, desc: [`In Suwon Haenggung-dong, you can enjoy <em>live jazz every Friday, Saturday, and Sunday evening</em>!`, `You can check the set list on Instagram. We recommend booking through Naver before you go :)`, `Do not miss <em>Padak Padak Club, a Haenggung-dong pride</em>, where you can enjoy live music up close in a small space without pressure.`] }
+      ],
+      closingTitle: 'Have a lovely time<br><em>in Haenggung-dong.</em>',
+      closingBody: 'This list grew slowly from places we actually visit ourselves. We hope your own new regular spot appears in Haenggung-dong too :)',
+      closingSign: '— Nene &amp; Minho · Stay Eego'
+    },
+    zh: {
+      code: '中文',
+      htmlLang: 'zh-CN',
+      meta: '本地人的指南 · STAY EEGO',
+      title: '行宫洞<br><span class="accent">常去小店</span>',
+      subtitle: '房东私心喜欢的行宫洞去处',
+      badge: '房东 <strong>Nene</strong> 真的会去的 <strong>31</strong> 家店',
+      intro: '有些地方是散步走着走着就会自然拐进去的；有些店是朋友来时一定想带他们去的；还有一些老店，行宫洞的时间一层一层都落在里面。这个街区有特别多走过30年、40年、50年的店，我们只挑了<em>自己真心喜欢的常去小店</em>。',
+      signature: '在行宫洞，Nene &amp; Minho',
+      filters: [
+        ['全部', '31'], ['吃饭', '14'], ['咖啡', '4'], ['甜点', '7'], ['小酒', '4'], ['逛逛', '3']
+      ],
+      sections: {
+        meal: ['吃饭', '好好吃一顿', '14 places'],
+        drink: ['咖啡', 'Cafés', '4 places'],
+        dessert: ['甜点', 'Sweets &amp; Bakery', '7 places'],
+        alcohol: ['小酒', 'Pubs &amp; old-school bars', '4 places'],
+        activity: ['逛逛', 'Bookshops, plants, jazz', '3 places']
+      },
+      map: 'Naver 地图',
+      cards: [
+        { tag: `韩食 · 辣炒年糕`, title: `李道京辣炒年糕`, desc: [`我们的推荐点法是<em>“原味辣炒年糕 + 拌面面条 + 综合炸物（+ 紫菜卷）+ 炒饭”</em> :) 酱汁是很好吃的那种辣！就算点微辣，也挺有存在感。`, `炸物应该是用干净的油炸的，没有油耗味，面衣很轻，咔嚓咔嚓的口感很好。炒饭用的米也好（秘密是田螺米！），酱汁裹住饭粒也不会湿烂，还是一粒一粒弹弹的。`, `老板娘把自己的名字挂在辣炒年糕上，带着自豪感做生意，那股劲儿很可爱。`] },
+        { tag: `韩食 · 烤肉`, title: `Ye博士`, desc: [`<em>性价比很高的烤肉店。</em>不用去吃贵贵的水原排骨，也能用合理价格吃到新鲜好吃的牛肋条。`, `以前是在市场后巷里，像路边摊一样用盆装着肉和葱丝卖，客人坐在澡堂小凳子上自己烤。现在已经盖起了像样的楼，这个变化很多水原人，包括我，都是亲眼见证的。`, `介绍一下这位从市场路边摊开始的成功故事主角 :D`] },
+        { tag: `韩食 · 牛肠`, title: `Ipjujip`, desc: [`<em>有50年以上传统的烤牛肠名店！</em>听说他们通过多年累积信任的供货渠道拿好货。干净新鲜的牛小肠、大肠、皱胃，还有牛心。`, `还能加点很特别的“牛脊髓”。这种东西隔一天就不能吃，店里敢卖，本身就说明新鲜度很强。因为常客和新客不断进来、翻桌快，才做得到。`, `天一凉，也很推荐<em>牛肠火锅</em> :)`] },
+        { tag: `韩食 · 盐烤猪肉`, title: `大吉盐烤`, desc: [`30多年一直守着名声的<em>水原盐烤自尊心。</em>`, `新鲜猪颈肉盐烤……拜托请吃一下……像五花肉一样有满足感的颈肉，一咬下去就会有“啊，真的不一样！”的感觉。店里会帮你烤好剪好，只要负责好好吃就行。招牌调味酱是大吉的亮点！不过我只蘸盐，因为肉真的新鲜又嫩。`, `Nene也很喜欢烤牛心和烤猪皮！尤其猪皮的样子在别的地方没见过……去确认一下吧 :) 小菜也丰富清爽，最后用大酱汤拌饭，或者来一碗拌面，真的很会收尾。`] },
+        { tag: `韩食 · 平壤冷面`, title: `平壤苑`, desc: [`水原代表性的<em>平壤冷面名店</em>！味道是大家都能舒服享受的难度。所有菜单都干净好吃，所以需要请人吃饭时就会想到这里。菜单丰富、满意度也都高，多点几样一起分着吃，很有小宴席的感觉 :)`, `其实Nene是很认真的饺子爱好者，冬天吃平壤苑的<em>饺子火锅</em>，是她冬天的快乐之一。`, `在韩屋改造的迷人空间里，看着飘雪，呼噜呼噜吃一锅饺子火锅吧。`] },
+        { tag: `韩食 · 刀削面`, title: `Doredore 制面所`, desc: [`最推荐的是放满牛筋的<em>“牛骨牛筋刀削面”</em>！`, `听说所有小菜都自己做，其中最好吃的当然是……泡菜！刀削面店泡菜好吃，不就赢了吗？小菜会有妈妈亲手腌的各种泡菜。泡菜爱好者的天堂！`, `给刀削面撒上胡椒，配泡菜呼噜呼噜吃吃看 :)`] },
+        { tag: `韩食 · 刀削面`, title: `大王刀削面`, desc: [`50年传统的乡村刀削面。<em>强烈推荐给爱吃面的人！</em>首先份量以价格来说非常惊人。普通刀削面6,000韩元……是真的吗……这种程度。一般女生一碗会有点撑，建议穿松紧裤！`, `普通和中大碗价格一样，但中大碗会附一颗鸡蛋。想补蛋白质就点中大。`, `汤头很淡，刚开始会想“怎么这么没味……”但后劲很强。<em>有点像刀削面界的平壤冷面。</em>萝卜泡菜和酸泡菜想吃多少自己拿。夏季限定豆浆面也很受欢迎！`] },
+        { tag: `韩食 · 马格利`, title: `王大炮`, desc: [`你知道“大碗酒家”吗？把马格利倒进搪瓷碗里豪爽喝，叫大碗酒，卖这种酒的地方就是大碗酒家。<em>也就是马格利小店！</em>`, `不过我们去王大炮是为了吃饭。泡菜汤和其他菜都太好吃了。店里不卖米饭，所以要在附近超市或便利店买即食饭带去。`, `在装着40年故事的老店里，喝马格利、吃好吃的泡菜汤。那种时间像停住的气氛真的很好。<em>追加小贴士）Minho强推土豆煎饼，请感受老板放在上面的审美和心意！</em>`] },
+        { tag: `韩食 · 家常饭`, title: `胡同家`, desc: [`好吃的小菜一摆上桌，就会觉得<em>像在家吃饭一样心里暖暖的。</em>用秘制泡菜炖到软软糯糯的老泡菜炖菜，简直是米饭小偷。`, `这家还上过许英万的《食客》，有一阵子很难抢到位置。原本就是附近长辈们像会客厅一样使用的地方，所以气氛热闹，很有活力。`, `辣炒猪肉、辣炒鱿鱼、辣椒酱汤也好吃，想吃家常韩食的话，我们很有底气推荐。`] },
+        { tag: `韩食 · 生鱼片`, title: `西门水产`, desc: [`Nene的<em>最爱生鱼片店之一。</em>老板会按季节推荐当下最好吃的东西，所以几乎不会踩雷！而且离家近，走路去也舒服，是家附近的好店。`, `经营20多年的老板一家值得信任，先吃一次看看！可能因为他们也做水产市场拍卖场，基础海鲜也非常新鲜。连不爱海鲜的朋友都被带入了海参、海鞘的世界，这还不够说明吗？`, `Nene的最爱是<em>鲭鱼刺身</em>！如果能点到，别犹豫直接点。犹豫只是浪费时间……真的强力推荐，双拇指！`] },
+        { tag: `韩食 · 包饭/生鱼片`, title: `乡下家田螺包饭`, desc: [`老板原本开了很久的生鱼片店，后来想轻松一点才改成包饭店；但老客人要求太多太多，结果又重新卖起生鱼片。现在有点本末倒置的感觉……？`, `<em>生鱼片无限续菜单只接受预约</em>，鱼种也会随季节变化，去之前请先打电话。不同鱼种价格也不同。`, `我们<em>黄尾鱼季一定会去一次</em>。处理得很漂亮，熟成也好，鱼片厚到塞满嘴巴的感觉特别幸福。包饭菜单 구성和味道也好，想轻松吃韩食时很推荐！`] },
+        { tag: `西式 · 烘焙`, title: `Meat Tale`, desc: [`<em>能俯瞰华城行宫的最佳景观餐厅。</em>`, `便宜的肉派当点心很好，当简单一餐也完全可以。自制 pastrami 三明治、放了 jambon 的披萨也好吃。还有各种配料的 ciabatta，可以慢慢看看 :)`, `天气好的日子，<em>屋顶座位</em>也很推荐！`] },
+        { tag: `中餐 · 饺子`, title: `延密`, desc: [`东北风格饺子店。由来自哈尔滨的中国老板经营，是<em>饺子专门店</em>。小笼包一样的汤汁饺子和冰花煎饺很有人气。个人很喜欢<em>鲅鱼水饺</em>。`, `老板很认真开发新菜单，会按季节或流行趋势持续介绍新菜。`, `每年看老板韩语一点点进步，也是很可爱、很让人欣慰的小看点。`] },
+        { tag: `中餐 · 老店`, title: `水原饺子`, desc: [`<em>50年传统的台式中华料理店。</em>轻松吃一碗牛肉汤配煎饺也好，点几道菜吃得丰盛也好。`, `这是我爷爷奶奶一直常去的店之一。家里有事时也常在那里度过时间，是有很多回忆的地方。`, `<em>点五香酱肉配煎饺，最后用牛肉汤面收尾，非常漂亮的一套！</em>`] },
+        { tag: `咖啡 · 精品`, title: `No Smoke Without Fire 柳林店`, desc: [`水原精品咖啡品牌<em>No Smoke Without Fire的2号店。</em>在八达山半山腰，准备了多种原豆和好吃的烘焙。`, `从我们家沿着<em>八达山散步路走约25分钟</em>就能到！烘焙种类也不少，很适合配咖啡。`, `走在行宫洞居民日常生活自然融在里面的八达山散步路上，再进去喝一杯咖啡，会有一点变成本地人的感觉。`] },
+        { tag: `咖啡 · 行宫景`, title: `We Have Today`, desc: [`透过大窗能看到<em>华城行宫景色，开阔又漂亮的咖啡店。</em>`, `从Stay Eego走路不到5分钟，就能充分感受华城行宫的魅力。`, `很有“我真的来水原行宫洞了”的那种<em>氛围感</em>。`] },
+        { tag: `咖啡 · 爵士`, title: `Groovy`, desc: [`一个莫名会让人怀念起并不存在的旧时光的空间。<em>深沉厚实的木质内装咖啡店。</em>`, `我喜欢的爵士音乐人作品常常响起，所以会有一种内心亲近感。<em>Bill Evans、Chet Baker、Miles Davis</em>的音乐都太适合这里了。白天晚上氛围都好。`, `推荐奶茶、法式吐司、冰拿铁。冰拿铁里放的是牛奶冰，所以喝到最后也不会变淡。细节就是这种东西……！在装满老板品味的空间里，小声、慢慢享受吧。<em>注意！3人以上不能入内。</em>`] },
+        { tag: `咖啡 · 手冲`, title: `Autograph`, desc: [`<em>行宫洞介绍最多原豆的店。</em>体验不同原豆，会重新发现咖啡味道原来可以这么多样。告诉老板你的咖啡喜好，也会帮你选菜单。`, `这里把Nene对手冲咖啡的兴趣拉高了……嘿嘿。也因此我们会买当天的推荐豆回家自己冲。`, `最近他们在附近把一栋二层独栋住宅改造成<em>2号店</em>，和本店的秘密基地感不同，又有另一种乐趣！在屋顶喝香气好的手冲咖啡，看着华城城墙，真的很好 :-)`] },
+        { tag: `蛋糕 · 慕斯`, title: `Freeh`, desc: [`专做<em>漂亮又好吃的慕斯蛋糕</em>的地方。每个月用有季节感的食材推出新菜单。`, `烤点心也好吃。推荐和<em>手冲咖啡搭配</em>着吃！`] },
+        { tag: `蛋糕 · 字母蛋糕`, title: `One More Cake`, desc: [`<em>行宫洞字母蛋糕第一名。</em>像机器一样精准又漂亮的 lettering，会把特别的日子变得更特别！`, `蛋糕味道也好，真是一举两得！如果特别日子需要蛋糕，请在One More<em>提前</em>准备。`] },
+        { tag: `饼干 · 司康`, title: `Pate Brisee`, desc: [`<em>岳母最爱的饼干店。</em>司康很好吃。`, `虽然所有菜单都推荐，但第一次还是经典最稳！推荐<em>经典费南雪和经典司康</em> :)`] },
+        { tag: `面包 · 酸种`, title: `Everneen`, desc: [`一个把面包做得<em>诚实又好</em>的勤快邻居、社区面包店。用天然酵母做面包，所以明明是面食，吃完肚子也舒服。`, `Nene最爱的是<em>100%全麦酸种</em>！朴素但越嚼越香，纯面包的魅力太好了。夹了蓝莓奶油奶酪的“蓝莓法棍”也是人气菜单。`, `不过说真的……都好吃，嘿嘿。`] },
+        { tag: `面包 · 盐面包`, title: `Salt Factory`, desc: [`行宫洞新出现的<em>盐面包专门店。</em>可以在Instagram上看刚出炉盐面包的时间。`, `如果卡好时间去，可能真的会遇到<em>终极盐面包</em>……？请期待在安静的行宫洞小巷里遇见的香香盐面包。`] },
+        { tag: `吉拿棒 · 黄豆粉年糕`, title: `Chuplus`, desc: [`乍看明明是哪里都常见的吉拿棒……但好像有点胖胖的……？咬一口，<em>像黄豆粉年糕一样Q弹的口感</em>会让人上瘾。听说面团里加了糯米粉，才做出这么有趣的口感！`, `<em>裹满黄豆粉的吉拿棒</em>是我的最爱。`, `点一根吉拿棒，到附近大榉树下的长椅坐着，咬咬咬，感受行宫洞独有的悠闲吧。`] },
+        { tag: `甜点 · 社区`, title: `Dingdong`, desc: [`行宫洞居民认可的<em>隐藏甜点强者。</em>`, `使用好材料、诚实制作，不炫技，努力展现甜点本来样子的地方。`, `是附近人持续会来的<em>被这个小区喜爱的店</em>。`] },
+        { tag: `居酒屋 · 日本酒`, title: `Sakedorobo`, desc: [`经过日本儿媳认证、还原原版配方的<em>牛杂锅居酒屋。</em>也能一起享受多种日本酒。`, `牛杂锅好吃，<em>大阪风御好烧和炸鸡翅tebasaki</em>也很适合配啤酒！`] },
+        { tag: `酒馆 · 海螺`, title: `Yudong海螺`, desc: [`水原人都知道的<em>大海螺店。</em>这里也在同一个位置营业将近30年，是南门的老面孔！`, `白海螺汤好吃，海螺黄瓜拌菜也好吃。`, `小空间里桌子挨得很近，不算安静，但会莫名觉得<em>很有生命力、很有生活活力</em>。`] },
+        { tag: `传统酒馆 · 老派`, title: `山贼`, desc: [`在“行宫洞”这个名字出现之前就存在的<em>行宫洞0.5代传统酒馆。</em>从那时起就用各种下酒菜满足许多爱酒的人。`, `最有人气的菜单，不管谁说都是<em>“陆海空炒乌冬 + 芝士土豆煎饼”的组合。</em>`, `再配马格利或东东酒，就能把行宫洞的 old-school vibe 感受得很到位。`] },
+        { tag: `马格利 · 大碗酒家`, title: `王大炮 <span class="also-note">· 也在吃饭里</span>`, desc: [`请感受老板30多年做出来的<em>手味。</em>连泡菜都亲自腌，心意很了不起。`, `老板年纪稍长，出菜会花一些时间，但<em>包括综合煎饼在内的所有下酒菜，都像是在补偿那段等待一样好吃。</em>`, `追加小贴士）Minho强推土豆煎饼，请感受老板放在上面的审美和心意！`] },
+        { tag: `独立书店`, title: `Broccoli Forest`, desc: [`<em>行宫洞元老级独立书店。</em>已经经营超过6年了！`, `老板们喜欢猫，所以也能看到在巷子里被大家喜爱的<em>流浪猫</em>。`, `可能因为老板们原本在出版界，选好书的眼光也好，也常常举办和知名作家的活动。`] },
+        { tag: `植物 · 花店`, title: `Seoa Shop`, desc: [`也许这是Nene花最多钱的地方……！是我们附近最常去的<em>植物园</em>。家里盆里的孩子们几乎都来自Seoa Shop……（小声小声）`, `我们很信任有实力的老板眼光，也常订花束当礼物！从一万韩元的小花束到大盆栽，都会满意！`, `Nene<em>喜欢在旅行地买花</em>。会有一点当地人的感觉，也像给可能变得平淡的旅行加一点生气。大家也可以在Seoa Shop带走这种能量！`] },
+        { tag: `爵士 · 现场`, title: `Padak Padak Club`, desc: [`在水原行宫洞，<em>每周五、六、日晚都能听爵士现场演出</em>！`, `可以在Instagram页面确认set list。建议通过Naver预约后再去 :)`, `在小空间里近距离、轻松享受现场音乐，别错过<em>行宫洞的骄傲 Padak Padak Club</em>！`] }
+      ],
+      closingTitle: '祝你在行宫洞<br><em>度过好时光。</em>',
+      closingBody: '这份清单，是我们自己慢慢走、慢慢吃、慢慢累积出来的常去小店。希望你的行宫洞里，也能出现新的常去之处 :)',
+      closingSign: '— Nene &amp; Minho · Stay Eego'
+    },
+    ja: {
+      code: '日本',
+      htmlLang: 'ja',
+      meta: '地元目線のガイド · STAY EEGO',
+      title: '行宮洞<br><span class="accent">行きつけ</span>',
+      subtitle: 'ホストが好きな、行宮洞のお店',
+      badge: 'ホスト <strong>Nene</strong> が実際に通う <strong>31</strong> 軒',
+      intro: '散歩していると自然に寄りたくなる場所、ゲストが来たら必ず連れて行きたい店、そして行宮洞の時間が層になって積もった老舗まで。30年、40年、50年と時を含んだ店がやけに多いこの街で、<em>私たちが本当に好きな行きつけ</em>だけを集めました。',
+      signature: '行宮洞より、Nene &amp; Minho',
+      filters: [
+        ['全部', '31'], ['食事', '14'], ['カフェ', '4'], ['甘いもの', '7'], ['お酒', '4'], ['楽しむ', '3']
+      ],
+      sections: {
+        meal: ['食事', 'Meals', '14 places'],
+        drink: ['カフェ', 'Cafés', '4 places'],
+        dessert: ['甘いもの', 'Sweets &amp; Bakery', '7 places'],
+        alcohol: ['お酒', 'Pubs &amp; old-school bars', '4 places'],
+        activity: ['楽しむ', 'Bookshops, plants, jazz', '3 places']
+      },
+      map: 'Naver地図',
+      cards: [
+        { tag: `韓食 · トッポッキ`, title: `イドギョン・トッポッキ`, desc: [`私たちのおすすめは<em>「基本トッポッキ + チョルミョン追加 + 揚げ物盛り合わせ（+ キムマリ）+ 焼き飯」</em>です :) おいしく辛いソースが最高！マイルドでもけっこう辛いです。`, `揚げ物は油がきれいなのか、油くささがなく衣が軽くてサクサク。焼き飯に使うお米も良いからか（秘密はタニシ米！）、ソースが染みてもべちゃっとせず、粒がぷりっとしています。`, `自分の名前を掲げて、誇りを持ってトッポッキを売っている女性店主さんがかわいいです。`] },
+        { tag: `韓食 · 焼肉`, title: `イェ博士`, desc: [`<em>コスパ最高の焼肉店。</em>高い水原カルビの代わりに、新鮮でおいしい牛カルビ肉を納得の価格で食べられます。`, `昔は市場の裏路地で、たらいに肉とネギ和えだけを入れて売り、外でお客さんが銭湯のイスに座って自分で焼いて食べるような店でした。今では立派な建物まで建てた姿を、私を含め多くの水原の人が見届けています。`, `市場の路上から始まった成功物語の主人公をご紹介します :D`] },
+        { tag: `韓食 · ホルモン`, title: `イプジュジプ`, desc: [`<em>50年以上の伝統を持つホルモン焼きの名店！</em>長い信頼関係のある取引先から良いものを仕入れているそうです。きれいで新鮮な小腸、大腸、ギアラ、そしてハツまで。`, `特殊部位の中でもさらに特殊な「牛の脊髄」も追加注文できます。翌日には食べられないほどのものなので、扱っていること自体が鮮度の証。常連も新しいお客さんも入って回転が良いからこそできることです。`, `肌寒くなったら<em>ホルモン鍋</em>も強くおすすめです :)`] },
+        { tag: `韓食 · 塩焼き`, title: `テギル塩焼き`, desc: [`30年以上名声を守ってきた、<em>水原の塩焼きの誇り。</em>`, `生モクサル塩焼き……どうか食べてください……サムギョプサルのようなモクサルで、一口噛むと「違う！」という感じがビシッと来ます。焼いて切ってくれるので、おいしく食べるだけ。名物のタレは風味を上げるテギルのキック！私は塩だけで食べます。肉が本当に新鮮でやわらかいんです。`, `Neneはハツ焼きと豚皮焼きもとてもおいしく食べました！特に豚皮は他では見ない見た目で……ぜひ確認してみてください :) おかずも色々あってさっぱり。締めにテンジャンチゲでご飯を混ぜたり、ビビン麺をすすったりすると、もうたまりません。`] },
+        { tag: `韓食 · 平壌冷麺`, title: `平壌苑`, desc: [`水原を代表する<em>平壌冷麺の名店</em>！誰でも楽しめる難易度の平壌冷麺です。どのメニューも端正でおいしく、人に食事をごちそうしたい時に必ず思い出す店。品数も多く満足度も高いので、みんなで色々頼んで分けるとちょっとした宴になります :)`, `実はNeneはかなりの餃子好きで、冬に平壌苑の<em>餃子鍋</em>を食べることを冬の楽しみの一つにしています。`, `韓屋を改装した魅力的な空間で、舞う雪を眺めながら餃子鍋をすすってみてください。`] },
+        { tag: `韓食 · カルグクス`, title: `ドレドレ製麺所`, desc: [`一番のおすすめはスジがたっぷり入った<em>「牛骨スジカルグクス」</em>！`, `おかずは全部手作りだそうで、その中で最高なのはやっぱり……キムチ！カルグクス屋でキムチがおいしければ、それで決まりじゃないですか？お母さんが漬けた色々なキムチが出てきます。キムチ好きの場所！`, `カルグクスに胡椒をたっぷりふって、キムチと一緒にすすってみてください :)`] },
+        { tag: `韓食 · カルグクス`, title: `大王カルグクス`, desc: [`50年伝統の田舎カルグクス。<em>麺好きには強くおすすめ！</em>まず価格に対する量がすごいです。普通カルグクスが6,000ウォンだなんて……本当ですか……というレベル。一般的な女性には一杯が少し手強いので、ウエストが楽な服で！`, `普通と中特は同じ価格ですが、中特には卵が一つ付きます。タンパク質を取りたい方は中特。`, `薄味のスープに最初は「なんでこんなにぼんやり……」と思うかもしれませんが、中毒性は最強。<em>カルグクス界の平壌冷麺みたいな味</em>でしょうか。カクテキと酸っぱいキムチは好きなだけ取って食べられます。夏限定のコングクスも大人気！`] },
+        { tag: `韓食 · マッコリ`, title: `ワンデポ`, desc: [`デポッジプをご存じですか？アルミの器にマッコリをたっぷり注いで飲むのをデポ酒といい、そういうお酒を出す場所がデポッジプ。<em>つまりマッコリ屋です！</em>`, `でも私たちはワンデポにご飯を食べに行きます。キムチチゲも他の料理も本当においしいんです。ご飯は売っていないので、近くのスーパーやコンビニで即席ご飯を買って行く必要があります。`, `40年の古い物語が詰まった老舗で楽しむマッコリとおいしいキムチチゲ。時間が止まったような情緒を味わうのにぴったり。<em>追加TIP）Minhoの強推しメニュー、じゃがいもチヂミの上にのった店主さんのセンスと感性を感じてみてください！</em>`] },
+        { tag: `韓食 · 家庭料理`, title: `コルモクジプ`, desc: [`味のあるおかずが並んだ瞬間から、<em>家でご飯を食べるように心がほかほかする場所。</em>秘伝のキムチをとろとろになるまで煮たムグンジ蒸しは、まさにご飯泥棒です。`, `ホ・ヨンマンの『食客』にも出た店で、しばらく席を取るのがとても難しかったです。もともとは近所の年配の方々のサロンのような場所なので、にぎやかで活気があります。`, `豚肉炒め、イカ炒め、コチュジャンチゲもおいしいので、家庭的な韓食が食べたい方に自信を持っておすすめします。`] },
+        { tag: `韓食 · 刺身`, title: `西門水産`, desc: [`Neneの<em>お気に入りの刺身店の一つ。</em>旬に合わせてその時一番おいしいものをすすめてくれるので、失敗するわけがありません！しかも家から近く、歩いて行ける近所の名店です。`, `20年以上営む店主さん一家を信じて、一度食べてみてください！水産市場の競り場も運営しているからか、基本の海鮮もとても新鮮。海鮮が苦手だった友人をナマコやホヤに入門させたと言えば、もう十分でしょう？`, `Neneの推しは<em>サバの刺身</em>！注文できるなら迷わず注文してください。迷うのは時間の無駄でしかありません……本当に強力おすすめ。ダブル親指！`] },
+        { tag: `韓食 · 包みご飯/刺身`, title: `田舎家タニシ包みご飯`, desc: [`もともと刺身店を長く営んでいた店主さんが、少しゆっくり働こうと包みご飯の店に変えたそうですが、昔からの常連の要望があまりに多くて刺身を再開したそうです。今では本末転倒気味……？`, `<em>刺身食べ放題メニューは予約制</em>で、季節によって魚の種類も変わるので、事前に電話してから行ってください。魚ごとに価格も違います。`, `私たちは<em>ブリの季節に必ず一度は寄る</em>ほうです。さばき方も見事で、熟成もよく、刺身も厚くて口いっぱいになる感じが最高。包みご飯メニューも構成と味が良く、気軽に韓食を食べたい時におすすめ！`] },
+        { tag: `洋食 · ベーカリー`, title: `ミートテール`, desc: [`<em>華城行宮を見下ろせる最高の眺めの店。</em>`, `おやつに良い手頃なミートパイは、軽い食事としても十分。自家製パストラミ入りサンドイッチ、ジャンボンの乗ったピザもおいしかったです。色々なトッピングのチャバタもあるので見てみてください :)`, `天気の良い日は<em>ルーフトップ席</em>もおすすめです！`] },
+        { tag: `中華 · 餃子`, title: `ヨンミル`, desc: [`中国東北スタイルの餃子店。ハルビン出身の中国人店主さんが営む<em>餃子専門店</em>です。小籠包で知られる肉汁餃子と、焼き餃子の氷花餃子が人気。個人的には<em>サワラ水餃子</em>が好きです。`, `新メニュー開発にとても真剣で、季節や流行に合わせて新しいメニューを継続的に紹介してくれています。`, `毎年少しずつ上達する店主さんの韓国語を見守るのも、楽しくて微笑ましいポイントです。`] },
+        { tag: `中華 · 老舗`, title: `水原餃子`, desc: [`<em>50年伝統の台湾式中華料理店。</em>軽く牛肉湯と焼き餃子を食べるのも良いし、料理を頼んでしっかり食べるのも良いです。`, `私の祖父母がずっと通っていた行きつけの一つです。家族の行事の時に時々行って時間を過ごした、思い出の多い場所でもあります。`, `<em>五香醤肉に焼き餃子を頼んで、食事に牛肉湯麺で締めると、とてもナイスなコース！</em>`] },
+        { tag: `カフェ · スペシャルティ`, title: `No Smoke Without Fire 柳林店`, desc: [`スペシャルティコーヒーで有名な水原のコーヒーブランド<em>No Smoke Without Fireの2号店。</em>八達山の中腹にあり、色々な豆とおいしいベーカリーが用意されています。`, `私たちの家から<em>八達山の散歩道を25分ほど</em>歩くと到着できます！ベーカリー類も色々あり、コーヒーと楽しむのに良いです。`, `行宮洞の住民の暮らしがそのまま溶け込んだ八達山の散歩道を歩いてから寄って一杯飲むと、地元の人になったように感じられるはずです。`] },
+        { tag: `カフェ · 行宮ビュー`, title: `We Have Today`, desc: [`大きな窓から見える<em>華城行宮の景色がとても開放的できれいなカフェ。</em>`, `Stay Eegoから歩いて5分もかからない場所で、華城行宮の魅力をたっぷり感じられます。`, `水原・行宮洞に来たという感じがたっぷりな、そういう<em>気分の気分！</em>`] },
+        { tag: `カフェ · ジャズ`, title: `グルービー`, desc: [`なぜか、存在しないノスタルジーまで感じる空間。<em>深く重みのあるウッドインテリアのカフェ。</em>`, `私の好きなジャズアーティストの曲がよく流れて、内なる親近感もむくむく湧く場所です。<em>ビル・エヴァンス、チェット・ベイカー、マイルス・デイヴィス</em>の音楽が本当によく似合います。昼も夜も雰囲気が良いです。`, `ミルクティー、フレンチトースト、アイスラテがおすすめ。アイスラテには牛乳の氷が入っていて、飲んでいる間ずっと薄くなりません。こういうのがディテール……！店主さんの趣味が詰まった空間で、ひそひそと落ち着いて楽しんでください。<em>注意！3名以上は入店できません。</em>`] },
+        { tag: `カフェ · ハンドドリップ`, title: `オートグラフ`, desc: [`<em>行宮洞で一番多くの豆を紹介している店。</em>色々な豆を体験すると、コーヒーの味がこんなに多様なんだと改めてわかります。自分の好みを伝えると、メニュー選びも手伝ってくれます。`, `Neneのハンドドリップコーヒーへの関心をぐっと引き上げてくれた場所です……へへ。おかげで私たちはその日のピックを買って、家でコーヒーを淹れるようになりました！`, `最近は近くに二階建ての一軒家を改装した<em>2号店</em>をオープンしました。本店のアジト感とは違う雰囲気で、また別の楽しさがあります！ルーフトップで香りの良いハンドドリップを飲みながら華城の城郭を眺めると、本当にいいんです :-)`] },
+        { tag: `ケーキ · ムース`, title: `フリヒ`, desc: [`きれいでおいしい<em>ムースケーキを専門</em>にしているお店。季節感のある素材で毎月新しいメニューを出しています。`, `焼き菓子類もおいしいです。<em>ハンドドリップコーヒーとペアリング</em>して食べるのがおすすめ！`] },
+        { tag: `ケーキ · レタリング`, title: `ワンモアケーキ`, desc: [`<em>行宮洞レタリングケーキの第一人者。</em>機械のように見事なレタリングで、特別な日をもっと特別にしてくれるケーキを作ってくれます！`, `ケーキの味も良いので、まさに一石二鳥！特別な日にケーキが必要なら、ワンモアで<em>早めに</em>準備してください。`] },
+        { tag: `クッキー · スコーン`, title: `パートブリゼ`, desc: [`<em>義母のお気に入りクッキー店。</em>スコーンがおいしいです。`, `全部おすすめですが、初訪問はやっぱりクラシック！<em>クラシックフィナンシェとクラシックスコーン</em>をおすすめします :)`] },
+        { tag: `パン · サワードウ`, title: `エバーニン`, desc: [`パンをとても<em>正直に、上手に作る</em>勤勉なご近所ベーカリー。天然酵母でパンを作るので、小麦粉ものなのに食べた後のお腹が楽です。`, `Neneのお気に入りは<em>全粒粉100%のサワードウ</em>！淡白だけれど噛むほど香ばしい、素朴なパンの魅力が本当に良いです。ブルーベリークリームチーズが挟まった「ブルーベリーバゲット」も人気メニュー。`, `でも正直……全部おいしいです、へへ。`] },
+        { tag: `パン · 塩パン`, title: `ソルトファクトリー`, desc: [`行宮洞に新しく現れた<em>塩パン専門店。</em>Instagramで焼きたての塩パンがいつ出るか確認できます。`, `時間を合わせて訪ねると、本当に<em>究極の塩パン</em>に出会えるかも……？静かな行宮洞の路地で出会う香ばしい塩パンを楽しみにしてください。`] },
+        { tag: `チュロス · きなこ餅`, title: `チュプラス`, desc: [`外から見るとどこにでもありそうなチュロスなのに……なんだか少しぽってり……？一口かじると、<em>もちもちしたきなこ餅のような食感</em>が癖になるチュロス店。生地にもち米を入れて、この楽しい食感を作っているそうです！`, `<em>きなこをたっぷりまぶしたチュロス</em>が私のお気に入り。`, `チュロスを一つ注文して、すぐ近くの大きなケヤキの下のベンチに座り、もぐもぐ食べながら行宮洞ならではのゆとりを感じてください。`] },
+        { tag: `デザート · ご近所`, title: `ディンドン`, desc: [`行宮洞の住民が認める<em>隠れデザート強者。</em>`, `良い素材を使って正直に作り、技巧に走らずデザート本来の姿を見せようとしているお店です。`, `近所の人がずっと通う、<em>街に愛される店</em>です。`] },
+        { tag: `居酒屋 · 日本酒`, title: `サケドロボ`, desc: [`日本人のお嫁さんのお墨付きでオリジナルレシピを再現した<em>もつ鍋居酒屋。</em>色々な日本酒も一緒に楽しめます。`, `もつ鍋もおいしいですが、<em>大阪式お好み焼きや手羽先</em>もビールのおつまみに最高です！`] },
+        { tag: `酒場 · つぶ貝`, title: `ユドンつぶ貝`, desc: [`水原の人なら皆知っている<em>大つぶ貝の店。</em>ここもほぼ30年近く同じ場所で営業している南門の古株です！`, `白つぶ貝のスープもおいしいし、つぶ貝ときゅうりの和え物もおいしいです。`, `小さな空間にテーブルがぎっしりなので静かな雰囲気ではありませんが、なぜか<em>生き生きとして、生活の活力を感じる場所</em>です。`] },
+        { tag: `伝統酒場 · 老舗`, title: `サンジョク`, desc: [`行宮洞という名前ができる前からあった<em>行宮洞0.5世代の伝統酒場。</em>色々なおつまみで当時から多くの酒好きたちを満足させてきました。`, `一番人気のメニューは、誰が何と言っても<em>「陸海空焼きうどん + チーズじゃがいもチヂミ」のコンビネーション。</em>`, `ここにマッコリやドンドン酒を合わせると、行宮洞のオールドスクールな雰囲気をしっかり感じられます。`] },
+        { tag: `マッコリ · デポッジプ`, title: `ワンデポ <span class="also-note">· 食事にも掲載</span>`, desc: [`30年以上商売してきた店主さんの<em>手の味を感じてください。</em>キムチまで自分で漬ける、その丁寧さがすごい店です。`, `ご年配なので料理が出るまで少し時間はかかりますが、<em>盛り合わせチヂミを含むすべてのおつまみは、その時間を補ってくれるような味。</em>`, `追加TIP）Minhoの強推しメニュー、じゃがいもチヂミの上にのった店主さんのセンスと感性を感じてみてください！`] },
+        { tag: `独立書店`, title: `ブロッコリーの森`, desc: [`<em>行宮洞の顔ともいえる独立書店。</em>もう6年以上運営されています！`, `猫好きの店主さんたちが営む場所で、路地で愛されながら暮らす<em>地域猫たち</em>にも会えます。`, `店主さんたちが出版業界にいたからか、良い本を選ぶ目もあり、有名作家とのイベントも時々行っています。`] },
+        { tag: `植物 · フラワーショップ`, title: `ソアショップ`, desc: [`Neneが一番お金を使った場所かも……！近所で一番の行きつけ、<em>植物園</em>です。鉢に入った子たちはほとんどソアショップ出身という……（こそこそ）`, `腕のある店主さんのセンスを信じて、ギフト用の花束もよく注文します！1万ウォンのものから大きな鉢まで、きっと満足できます！`, `Neneは<em>旅先で花を買うのが好き</em>です。現地の人の気分にもなるし、少し退屈になりがちな旅に小さな生気をくれる気がするんです。皆さんもそんなエネルギーをソアショップで受け取ってください！`] },
+        { tag: `ジャズ · ライブ`, title: `パダクパダククラブ`, desc: [`水原・行宮洞で<em>毎週金・土・日曜の夜にジャズライブ</em>を楽しめます！`, `Instagramページでセットリストを確認できます。Naverで予約してから楽しむのがおすすめです :)`, `気軽な気持ちで、小さな空間で近くにライブ音楽を楽しめる<em>行宮洞の誇り、パダクパダククラブ</em>をお見逃しなく！`] }
+      ],
+      closingTitle: '行宮洞で<br><em>良い時間をお過ごしください。</em>',
+      closingBody: 'このリストは、私たちが実際に通いながら少しずつ積み重ねてきた行きつけです。皆さんの行宮洞にも、新しい行きつけができますように :)',
+      closingSign: '— Nene &amp; Minho · Stay Eego'
+    }
+  };
+
+  chips.forEach(chip => {
+    chip.addEventListener('click', () => {
+      const filter = chip.dataset.filter;
+      
+      chips.forEach(c => c.classList.remove('active'));
+      chip.classList.add('active');
+      
+      // Remove all filter classes
+      body.classList.remove('filter-meal', 'filter-drink', 'filter-dessert', 'filter-alcohol', 'filter-activity');
+      
+      if (filter !== 'all') {
+        body.classList.add('filter-' + filter);
+      }
+      
+      // Scroll to top of content area smoothly
+      window.scrollTo({ top: document.querySelector('.filter-bar').offsetTop - 10, behavior: 'smooth' });
+    });
+  });
+
+  function setHTML(selector, html) {
+    const node = document.querySelector(selector);
+    if (node) node.innerHTML = html;
+  }
+
+  function readSavedLanguage() {
+    try {
+      return localStorage.getItem('haenggungGuideLang');
+    } catch (error) {
+      return null;
+    }
+  }
+
+  function saveLanguage(lang) {
+    try {
+      localStorage.setItem('haenggungGuideLang', lang);
+    } catch (error) {
+      // Some in-app browsers restrict localStorage on file:// pages.
+    }
+  }
+
+  function applyLanguage(lang) {
+    const data = copy[lang] || copy.ko;
+    document.documentElement.lang = data.htmlLang;
+    body.dataset.lang = lang;
+    saveLanguage(lang);
+
+    languageCurrent.textContent = data.code;
+    languageOptions.forEach(option => {
+      option.classList.toggle('active', option.dataset.lang === lang);
+    });
+
+    setHTML('.meta-top span:nth-child(2)', data.meta);
+    setHTML('.hero h1', data.title);
+    setHTML('.hero .sub-en', data.subtitle);
+    setHTML('.count-badge', data.badge);
+    setHTML('.hero .intro', data.intro);
+    setHTML('.signature', data.signature);
+
+    chips.forEach((chip, index) => {
+      const item = data.filters[index];
+      chip.innerHTML = `${item[0]} <span class="num">${item[1]}</span>`;
+    });
+
+    sections.forEach(section => {
+      const sectionCopy = data.sections[section.dataset.section];
+      if (!sectionCopy) return;
+      section.querySelector('h2').innerHTML = sectionCopy[0];
+      section.querySelector('.label-en').innerHTML = sectionCopy[1];
+      section.querySelector('.count').innerHTML = sectionCopy[2];
+    });
+
+    places.forEach((place, index) => {
+      const card = data.cards[index] || sourceCards[index];
+      place.querySelector('.place-tag').innerHTML = card.tag;
+      place.querySelector('h3').innerHTML = card.title;
+      place.querySelector('.place-desc').innerHTML = card.desc.map(paragraph => `<p>${paragraph}</p>`).join('');
+      place.querySelector('.place-link').innerHTML = `${data.map} <span class="arrow">→</span>`;
+    });
+
+    if (data.closingTitle) setHTML('.closing h4', data.closingTitle);
+    if (data.closingBody) setHTML('.closing p', data.closingBody);
+    if (data.closingSign) setHTML('.closing .sign', data.closingSign);
+  }
+
+  function closeLanguageMenu() {
+    languageMenu.hidden = true;
+    languageButton.setAttribute('aria-expanded', 'false');
+  }
+
+  languageButton.addEventListener('click', () => {
+    const nextState = languageMenu.hidden;
+    languageMenu.hidden = !nextState;
+    languageButton.setAttribute('aria-expanded', String(nextState));
+  });
+
+  languageOptions.forEach(option => {
+    option.addEventListener('click', () => {
+      applyLanguage(option.dataset.lang);
+      closeLanguageMenu();
+    });
+  });
+
+  document.addEventListener('click', event => {
+    if (!event.target.closest('.language-switcher')) closeLanguageMenu();
+  });
+
+  document.addEventListener('keydown', event => {
+    if (event.key === 'Escape') closeLanguageMenu();
+  });
+
+  applyLanguage(readSavedLanguage() || 'ko');
+</script>
+
+</body>
+</html>
